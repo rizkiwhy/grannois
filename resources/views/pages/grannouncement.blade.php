@@ -79,7 +79,7 @@
                         {{-- Ribbon Default <br /> --}}
                         <small>&#8226; Grannois adalah sistem informasi yang mengumumkan hasil kelulusan seluruh siswa
                             SMKN 11
-                            BANDUNG.
+                            BANDUNG.<br>
                             &#8226; Silahkan masukkan Nomor Induk Siswa (NIS), maka hasil kelulusan akan
                             ditampilkan.<br>
                             &#8226; Hasil kelulusan dapat diunduh dalam bentuk file dengan format PDF.<br>
