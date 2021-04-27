@@ -103,8 +103,8 @@
                 url: url,
                 method: "GET",
                 success: function(response) {
-                    console.log(response)
-                    if (response.message == 'success') {
+                    // console.log(response)
+                    if (response.status == 'success') {
                         $('#report').empty();
                         html += `<div class="callout callout-success">
                                     <h5>Selamat ${response.data.user.name}, anda lulus!</h5>
@@ -214,7 +214,7 @@
                                 </p>
                                 </div>`;
                     $('#report').append(html);
-                    console.log(response)
+                    // console.log(response)
                 }
             });
         });

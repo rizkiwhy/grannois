@@ -22,6 +22,7 @@ class ActivitySeeder extends Seeder
                 'school_year' => 2020,
                 'start_date' => '2021-04-27',
                 'end_date' => '2021-04-27',
+                'note' => 'Kelulusan 2020/2021'
             ],
         ];
 
