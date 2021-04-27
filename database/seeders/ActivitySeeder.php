@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 // use Illuminate\Support\Str;
-use App\models\Activity;
+use App\Models\Activity;
 
 class ActivitySeeder extends Seeder
 {
