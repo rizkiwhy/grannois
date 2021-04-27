@@ -19,12 +19,14 @@ class AnnouncementSeeder extends Seeder
                 // 'id' => Str::uuid(),
                 'activity_id' => 1,
                 'publish_date' => '2021-04-27',
+                'publisher' => 1,
                 'note' => 'Kelulusan 2020/2021',
             ],
             [
                 // 'id' => Str::uuid(),
                 'activity_id' => 2,
                 'publish_date' => '2022-04-27',
+                'publisher' => 1,
                 'note' => 'Kelulusan 2021/2022',
             ],
         ];
