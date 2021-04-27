@@ -153,12 +153,12 @@
                                                 </td>
                                                 <td>{{ $item->student->user->name }}</td>
                                                 <td>
-                                                    {{ $item->status }}
-                                                    {{-- @if ($item->status === 1)
+                                                    {{-- {{ $item->status }} --}}
+                                                    @if ($item->status)
                                                         Lulus
                                                     @else
                                                         Tidak Lulus
-                                                    @endif --}}
+                                                    @endif
                                                 </td>
                                                 <td>
                                                     <a href="{{ asset('certificate/') . '/' . $item->certificate }}"
