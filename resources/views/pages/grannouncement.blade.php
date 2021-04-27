@@ -103,6 +103,14 @@
                 url: url,
                 method: "GET",
                 success: function(response) {
+                    function formatDate (input) {
+                        var datePart = input.match(/\d+/g),
+                        year = datePart[0]
+                        month = datePart[1] 
+                        day = datePart[2];
+
+                        return `${day}-${month}-${year}`
+                    }
                     // console.log(response)
                     if (response.status == 'success') {
                         $('#report').empty();
@@ -164,7 +172,7 @@
                                     <tbody>
                                     <tr>
                                     <td class="text-center">
-                                    Bandung, ${response.data.graduation.activity.announcement[0].publish_date}<br>
+                                    Bandung, ${formatDate(response.data.graduation.activity.announcement[0].publish_date)}<br>
                                     Kepala Sekolah<br>
                                     <br>
                                     <br>
