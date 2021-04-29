@@ -206,7 +206,7 @@
                         html += `<div class="callout callout-danger">
                                     <h5>${response.message}!</h5>
                                     <p>
-                                    &#8226; Tunggu pengumuman hasil kelulusan sesuai jadwal yang telah ditentukan (${response.publish_date})  <br>
+                                    &#8226; Tunggu pengumuman hasil kelulusan sesuai jadwal yang telah ditentukan (${formatDate(response.publish_date)})  <br>
                                     &#8226; Hubungi Staff Kurikulum jika terjadi permasalahan <br>
                                     </p>
                                     </div>`;

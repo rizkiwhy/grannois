@@ -22,7 +22,10 @@ class AnnouncementController extends Controller
         $data['app'] = 'Graduation Announcement Information System';
 
         // get all data announcement
-        $data['announcement'] = Announcement::with(['activity.activityType', 'user'])->get();
+        $data['announcement'] = Announcement::with([
+            'activity.activityType',
+            'user',
+        ])->get();
 
         // temp array activityId yang sudah digunakan
         $tempArrActivityId = [];
@@ -71,6 +74,7 @@ class AnnouncementController extends Controller
             'publishDate' => 'required',
         ]);
 
+        // cari data activity untuk keperluan isi kolom note table announcement
         $activity = Activity::find($request->activityId);
 
         // create announcement
@@ -78,12 +82,7 @@ class AnnouncementController extends Controller
             'activity_id' => $request->activityId,
             'publish_date' => $request->publishDate,
             'publisher' => Auth::user()->id,
-            'note' =>
-                $activity->activityType->name .
-                ' ' .
-                $activity->school_year .
-                ' / ' .
-                ++$activity->school_year,
+            'note' => $activity->note,
         ]);
 
         // create announcement berhasil

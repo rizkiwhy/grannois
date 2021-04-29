@@ -14,6 +14,7 @@ class Activity extends Model
         'school_year',
         'start_date',
         'end_date',
+        'note',
     ];
 
     public function activityType()

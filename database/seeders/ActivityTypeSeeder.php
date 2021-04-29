@@ -19,6 +19,10 @@ class ActivityTypeSeeder extends Seeder
                 'name' => 'Kelulusan',
                 'active' => true,
             ],
+            [
+                'name' => 'Ujian Sekolah',
+                'active' => true,
+            ],
         ];
 
         for ($i = 0; $i < count($dataActivityType); $i++) {

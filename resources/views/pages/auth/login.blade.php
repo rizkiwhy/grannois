@@ -36,8 +36,7 @@
                     @csrf
                     <label for="exampleInputEmail1">Email address</label>
                     <div class="input-group form-group">
-                        <input type="email" name="email" class="form-control" id="email" name="email"
-                            placeholder="Enter email">
+                        <input type="email" name="email" class="form-control" id="email" placeholder="Enter email">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
@@ -46,8 +45,8 @@
                     </div>
                     <label for="exampleInputPassword1">Password</label>
                     <div class="input-group form-group">
-                        <input type="password" name="password" class="form-control" id="password" name="password"
-                            placeholder="Password">
+                        <input type="password" name="password" class="form-control" id="password" 
+                            placeholder="Enter Password">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
