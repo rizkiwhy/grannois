@@ -227,8 +227,9 @@ class ActivityController extends Controller
      */
     public function destroy($id, Request $request)
     {
+        // dd($id);
         // cari activity
-        $activity = Activity::find($request->deleteId);
+        $activity = Activity::find($id);
         // dd($activity);
 
         // delete activity

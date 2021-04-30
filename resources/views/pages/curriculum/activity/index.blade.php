@@ -125,7 +125,7 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <table id="example1" class="table table-bordered table-striped">
+                                <table id="dataTable" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
                                             <th class="text-center">#</th>
@@ -142,7 +142,7 @@
                                         @endphp
                                         @foreach ($data['activity'] as $item)
                                             <tr>
-                                                <td class="text-center">{{ $i }}</td>
+                                                <td class="text-center">{{ $item->id }}</td>
                                                 <td>{{ $item->activityType->name }}</td>
                                                 <td>{{ $item->school_year . ' / ' . ++$item->school_year }}</td>
                                                 <td>{{ $item->start_date }}</td>
@@ -152,10 +152,10 @@
                                                         href="{{ route('activity.edit', ['activity' => $item->id]) }}"
                                                         data-bs-toggle="tooltip" title="Ubah"><i
                                                             class="fas fa-edit"></i></a>
-                                                    <button class="btn btn-danger btn-sm" data-toggle="modal"
+                                                    <button class="btn btn-danger btn-sm delete" data-toggle="modal"
+                                                        onclick="deleteItem({{ $item }})"
                                                         data-target="#modalDelete" data-backdrop="static"
-                                                        onclick="deleteItem({{ $item }})" data-bs-toggle="tooltip"
-                                                        title="Hapus">
+                                                        data-bs-toggle="tooltip" title="Hapus">
                                                         <i class="fas fa-trash"></i>
                                                     </button>
 
@@ -197,11 +197,10 @@
                         </div>
                         <div class="modal-body">
 
-                            <form action="{{ route('activity.destroy', ['activity' => $item]) }}" method="post"
-                                class="form-horizontal">
+                            <form action="#" method="post" class="form-horizontal" id="deleteForm">
                                 @method('delete')
                                 @csrf
-                                <input type="hidden" name="deleteId" id="deleteId" value="" />
+                                {{-- <input type="hidden" name="deleteId" id="deleteId" value="" /> --}}
                                 <input type="hidden" name="deleteNote" id="deleteNote" value="" />
                                 Apakah anda yakin akan menghapus Kegiatan <span name="textNote" id="textNote"></span>?
                         </div>
@@ -220,8 +219,7 @@
         <script type="text/javascript">
             function deleteItem(arr) {
                 $('#textNote').text(arr.note)
-                $('#deleteId').val(arr.id)
-                $('#deleteNote').val(arr.note)
+                $('#deleteForm').attr('action', `activity/${arr.id}`)
             }
         </script>
     @endsection
