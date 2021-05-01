@@ -32,7 +32,9 @@ class GraduationController extends Controller
             'activityType',
             'announcement',
             'graduation',
-        ])->get();
+        ])
+            ->where('activity_type_id', 1)
+            ->get();
 
         // temp array studentId yang sudah digunakan
         $tempArrStudentId = [];
@@ -51,7 +53,7 @@ class GraduationController extends Controller
             ->whereNotIn('id', $tempArrStudentId)
             ->get();
 
-        // return response()->json($data);
+        // return response()->json($data['graduation']);
 
         return view('pages.curriculum.graduation.index', compact('data'));
     }
@@ -74,7 +76,6 @@ class GraduationController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         // validasi data request
         $request->validate([
             'activityId' => 'required',
@@ -83,23 +84,17 @@ class GraduationController extends Controller
             'certificate' => 'required',
         ]);
 
-        if ($request->status === '1') {
-            $request->status = 1;
-            // dd($request->status);
-        }
+        // set status
+        $status = $request->status === '1' ? 1 : 2;
 
-        // nis
+        // get nis from student
         $student = Student::find($request->studentId);
-        // dd($student->student_parent_number);
-
-        //
-        // dd($request->file('certificate'));
 
         // create graduation
         $createGraduation = Graduation::create([
             'activity_id' => $request->activityId,
             'student_id' => $request->studentId,
-            'status' => $request->status,
+            'status' => $status,
             'certificate' =>
                 $student->student_parent_number .
                 '-' .
@@ -169,7 +164,44 @@ class GraduationController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data['layout'] = 'layouts.master';
+        $data['page'] = 'Kelulusan';
+        $data['subpage'] = 'Edit';
+        $data['app'] = 'Graduation Announcement Information System';
+
+        // get data graduation yang akan diubah
+        $data['graduation'] = Graduation::find($id);
+
+        // get all data graduation
+        $dataGraduation = Graduation::all();
+
+        // temp array studentId yang sudah digunakan
+        $tempArrStudentId = [];
+
+        // mencari & mengisi studentId yang sudah digunakan ke $tempArrStudentId
+        for ($i = 0; $i < count($dataGraduation); $i++) {
+            array_push($tempArrStudentId, $dataGraduation[$i]->student_id);
+        }
+
+        // get all data student yang belum dibuat kelulusan
+        $data['student'] = Student::with([
+            'competencyOfExpertise',
+            'user',
+            'graduation',
+        ])
+            ->whereNotIn('id', $tempArrStudentId)
+            ->get();
+
+        // get all data activty
+        $data['activity'] = Activity::with([
+            'activityType',
+            'announcement',
+            'graduation',
+        ])
+            ->where('activity_type_id', 1)
+            ->get();
+
+        return view('pages.curriculum.graduation.edit', compact('data'));
     }
 
     /**
@@ -181,7 +213,71 @@ class GraduationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // validasi data request
+        $request->validate([
+            'activityId' => 'required',
+            'studentId' => 'required',
+            'status' => 'required',
+            // 'certificate' => 'required',
+        ]);
+
+        // set status
+        $status = $request->status === '1' ? 1 : 2;
+
+        // get nis from student
+        $student = Student::find($request->studentId);
+
+        // data graduation yang akan di ubah
+        $graduation = Graduation::find($id);
+
+        if ($request->hasFile('certificate')) {
+            $request->certificate->move(
+                'certificate',
+                $student->student_parent_number .
+                    '-' .
+                    $request->file('certificate')->getClientOriginalName()
+            );
+
+            // update graduation
+            $updateGraduation = $graduation->update([
+                'activity_id' => $request->activityId,
+                'student_id' => $request->studentId,
+                'status' => $status,
+                'certificate' =>
+                    $student->student_parent_number .
+                    '-' .
+                    $request->file('certificate')->getClientOriginalName(),
+            ]);
+        } else {
+            // update graduation
+            $updateGraduation = $graduation->update([
+                'activity_id' => $request->activityId,
+                'student_id' => $request->studentId,
+                'status' => $status,
+            ]);
+        }
+
+        // update graduation berhasil
+        if ($updateGraduation) {
+            return redirect()
+                ->route('graduation.index')
+                ->with(
+                    'success_message',
+                    ucwords($graduation->activity->note) .
+                        ' ' .
+                        $graduation->student->user->name .
+                        ' berhasil ditambahkan!'
+                );
+        } else {
+            return redirect()
+                ->route('graduation.index')
+                ->with(
+                    'error_message',
+                    'Pengumuman ' .
+                        $graduation->activity->note .
+                        ' gagal ditambahkan!'
+                );
+        }
     }
 
     /**
@@ -192,6 +288,31 @@ class GraduationController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // cari graduation
+        $graduation = Graduation::withTrashed()->find($id);
+
+        // delete graduation
+        $destroyGraduation = $graduation->delete();
+
+        // delete graduation berhasil
+        if ($destroyGraduation) {
+            return redirect()
+                ->route('graduation.index')
+                ->with(
+                    'success_message',
+                    'Kelulusan ' .
+                        $graduation->student->user->name .
+                        ' berhasil dihapus!'
+                );
+        } else {
+            return redirect()
+                ->route('graduation.index')
+                ->with(
+                    'error_message',
+                    'Kelulusan ' .
+                        $announcement->student->user->name .
+                        'gagal dihapus!'
+                );
+        }
     }
 }

@@ -20,11 +20,11 @@
                 </div>
                 <div class="col-sm-6">
                     <button class="btn btn-primary btn-sm mr-2 float-sm-right" data-toggle="modal"
-                        data-target="#modalCreate" data-backdrop="static">
+                        data-target="#createModal" data-backdrop="static">
                         <i class="fas fa-plus mr-2"></i>Tambah
                     </button>
                 </div>
-                <div class="modal fade" id="modalCreate">
+                <div class="modal fade" id="createModal">
                     <div class="modal-dialog modal-dialog-centered modal-md">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -35,7 +35,7 @@
                             </div>
                             <div class="modal-body">
                                 <form action="{{ route('activity.store') }}" method="post" class="form-horizontal"
-                                    id="storeForm">
+                                    id="createForm">
                                     @csrf
                                     <div class="row">
                                         <div class="col-sm-7 form-group">
@@ -154,7 +154,7 @@
                                                             class="fas fa-edit"></i></a>
                                                     <button class="btn btn-danger btn-sm delete" data-toggle="modal"
                                                         onclick="deleteItem({{ $item }})"
-                                                        data-target="#modalDelete" data-backdrop="static"
+                                                        data-target="#deleteModal" data-backdrop="static"
                                                         data-bs-toggle="tooltip" title="Hapus">
                                                         <i class="fas fa-trash"></i>
                                                     </button>
@@ -184,7 +184,7 @@
                     </div>
                 </div>
             </div>
-            <div class="modal fade" id="modalDelete">
+            <div class="modal fade" id="deleteModal">
                 <div class="modal-dialog modal-dialog-centered modal-md">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -200,8 +200,6 @@
                             <form action="#" method="post" class="form-horizontal" id="deleteForm">
                                 @method('delete')
                                 @csrf
-                                {{-- <input type="hidden" name="deleteId" id="deleteId" value="" /> --}}
-                                <input type="hidden" name="deleteNote" id="deleteNote" value="" />
                                 Apakah anda yakin akan menghapus Kegiatan <span name="textNote" id="textNote"></span>?
                         </div>
                         <div class="modal-footer justify-content-between">

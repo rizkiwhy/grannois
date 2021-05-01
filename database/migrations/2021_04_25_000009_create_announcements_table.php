@@ -32,7 +32,7 @@ class CreateAnnouncementsTable extends Migration
             //     ->constrained('users')
             //     ->onUpdate('cascade')
             //     ->onDelete('cascade');
-            $table->string('note')->unique();
+            $table->string('note');
             $table
                 ->foreignId('publisher')
                 ->constrained('users')

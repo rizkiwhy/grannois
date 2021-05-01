@@ -24,7 +24,7 @@ class CreateActivitiesTable extends Migration
             $table->year('school_year');
             $table->date('start_date');
             $table->date('end_date');
-            $table->string('note')->unique();
+            $table->string('note');
             $table->timestamps();
             $table->softDeletes();
         });

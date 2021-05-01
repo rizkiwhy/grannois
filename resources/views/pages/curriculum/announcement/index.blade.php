@@ -20,11 +20,11 @@
                 </div>
                 <div class="col-sm-6">
                     <button class="btn btn-primary btn-sm mr-2 float-sm-right" data-toggle="modal"
-                        data-target="#modalCreate" data-backdrop="static">
+                        data-target="#createModal" data-backdrop="static">
                         <i class="fas fa-plus mr-2"></i>Tambah
                     </button>
                 </div>
-                <div class="modal fade" id="modalCreate">
+                <div class="modal fade" id="createModal">
                     <div class="modal-dialog modal-dialog-centered modal-md">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -37,6 +37,24 @@
                                 <form action="{{ route('announcement.store') }}" method="post" class="form-horizontal"
                                     id="storeForm">
                                     @csrf
+                                    @if (Auth::user()->role_id === 1)
+                                        <div class="row">
+                                            <div class="col-sm-12 form-group">
+                                                <label for="publisher">Publisher</label>
+                                                <div class="input-group">
+                                                    <select class="form-control select2" id="publisher" name="publisher"
+                                                        style="width: 100%;">
+                                                        <option value="" disabled selected>Pilih Penerbit</option>
+                                                        @foreach ($data['user'] as $item)
+                                                            <option value="{{ $item->id }}">
+                                                                {{ $item->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
                                     <div class="row">
                                         <div class="col-sm-12 form-group">
                                             <label for="kegiatan">Kegiatan</label>
@@ -46,7 +64,7 @@
                                                     <option value="" disabled selected>Pilih Kegiatan</option>
                                                     @foreach ($data['activity'] as $item)
                                                         <option value="{{ $item->id }}">
-                                                            {{ $item->activityType->name . ' ' . $item->school_year . ' / ' . ++$item->school_year }}
+                                                            {{ $item->note }}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -57,8 +75,9 @@
                                         <div class="col-sm-12 form-group ">
                                             <label for="tanggalPenerbitan">Tanggal Penerbitan</label>
                                             <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                                <input type="date" name="publishDate" class="form-control datetimepicker-input"
-                                                    id="publishDate" data-target="#reservationdate" />
+                                                <input type="date" name="publishDate"
+                                                    class="form-control datetimepicker-input" id="publishDate"
+                                                    data-target="#reservationdate" />
                                                 <div class="input-group-append" data-target="#reservationdate"
                                                     data-toggle="datetimepicker">
                                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -117,11 +136,22 @@
                                         @foreach ($data['announcement'] as $item)
                                             <tr>
                                                 <td class="text-center">{{ $i }}</td>
-                                                <td>{{ $item->activity->activityType->name . ' ' . $item->activity->school_year . ' / ' . ++$item->activity->school_year }}
-                                                </td>
+                                                <td>{{ $item->note }}</td>
                                                 <td>{{ $item->publish_date }}</td>
                                                 <td>{{ $item->user->name }}</td>
-                                                <td></td>
+                                                <td class="text-center">
+                                                    <a class="btn btn-warning btn-sm"
+                                                        href="{{ route('announcement.edit', ['announcement' => $item->id]) }}"
+                                                        data-bs-toggle="tooltip" title="Ubah"><i
+                                                            class="fas fa-edit"></i></a>
+                                                    <button class="btn btn-danger btn-sm" data-toggle="modal"
+                                                        onclick="deleteItem({{ $item }})"
+                                                        data-target="#deleteModal" data-backdrop="static"
+                                                        data-bs-toggle="tooltip" title="Hapus">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+
+                                                </td>
                                             </tr>
                                             @php
                                                 $i++;
@@ -145,5 +175,41 @@
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="deleteModal">
+                <div class="modal-dialog modal-dialog-centered modal-md">
+                    <div class="modal-content">
+                        <div class="modal-header">
+
+                            <h4 class="modal-title">Delete {{ $data['page'] }}
+                            </h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <form action="#" method="post" class="form-horizontal" id="deleteForm">
+                                @method('delete')
+                                @csrf
+                                Apakah anda yakin akan menghapus Pengumuman <span name="textNote" id="textNote"></span>?
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                            <button type="submit" class="btn btn-danger">Hapus</button>
+                        </div>
+                        </form>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
         </section>
+        <script src="{{ asset('src/plugins/jquery/jquery.min.js') }}"></script>
+        <script type="text/javascript">
+            function deleteItem(arr) {
+                $('#textNote').text(arr.note)
+                $('#deleteForm').attr('action', `announcement/${arr.id}`)
+            }
+
+        </script>
     @endsection

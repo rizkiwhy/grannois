@@ -36,8 +36,6 @@ class ActivityController extends Controller
         $data['startYear'] = $month <= 6 ? --$year : $year;
         $data['endYear'] = ++$year;
 
-        // dd($retVal);
-
         return view('pages.curriculum.activity.index', compact('data'));
     }
 
@@ -59,7 +57,6 @@ class ActivityController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         // validasi data request
         $request->validate([
             'activityTypeId' => 'required',
@@ -175,6 +172,9 @@ class ActivityController extends Controller
         // cari data tipe activity untuk keperluan isi kolom note table activity
         $activityType = ActivityType::find($request->activityTypeId);
 
+        // temp shoolYear
+        $tempSchoolYear = $request->schoolYear;
+
         // format note
         $note =
             $activityType->name .
@@ -187,7 +187,7 @@ class ActivityController extends Controller
         $duplicateActivity = Activity::where('note', $note)->get();
 
         // data activity duplicate
-        if ($duplicateActivity->count() > 1) {
+        if ($duplicateActivity->count() > 0) {
             return redirect()
                 ->route('activity.index')
                 ->with('error_message', 'Entri duplikat ' . $note . '!');
@@ -195,7 +195,7 @@ class ActivityController extends Controller
             // update activity
             $updateActivity = Activity::find($id)->update([
                 'activity_type_id' => $request->activityTypeId,
-                'school_year' => $request->schoolYear,
+                'school_year' => $tempSchoolYear,
                 'start_date' => $request->startDate,
                 'end_date' => $request->endDate,
                 'note' => $note,
@@ -225,12 +225,10 @@ class ActivityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id, Request $request)
+    public function destroy($id)
     {
-        // dd($id);
         // cari activity
-        $activity = Activity::find($id);
-        // dd($activity);
+        $activity = Activity::withTrashed()->find($id);
 
         // delete activity
         $destroyActivity = $activity->delete();
@@ -241,14 +239,14 @@ class ActivityController extends Controller
                 ->route('activity.index')
                 ->with(
                     'success_message',
-                    'Kegiatan ' . $request->deleteNote . ' berhasil dihapus!'
+                    'Kegiatan ' . $activity->note . ' berhasil dihapus!'
                 );
         } else {
             return redirect()
                 ->route('activity.index')
                 ->with(
                     'error_message',
-                    'Kegiatan ' . $request->deleteNote . 'gagal dihapus!'
+                    'Kegiatan ' . $activity->note . 'gagal dihapus!'
                 );
         }
     }
