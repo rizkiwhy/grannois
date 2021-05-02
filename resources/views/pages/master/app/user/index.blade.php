@@ -34,60 +34,65 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="{{ route('activity.store') }}" method="post" class="form-horizontal"
+                                <form action="{{ route('user.store') }}" method="post" class="form-horizontal"
                                     id="createForm">
                                     @csrf
                                     <div class="row">
-                                        <div class="col-sm-7 form-group">
-                                            <label for="kegiatan">Tipe Kegiatan</label>
+                                        <div class="col-sm-12 form-group">
+                                            <label for="nama">Nama</label>
                                             <div class="input-group">
-                                                <select class="form-control select2" id="activityTypeId"
-                                                    name="activityTypeId" style="width: 100%;">
-                                                    <option value="" disabled selected>Pilih Tipe Kegiatan</option>
-                                                    @foreach ($data['activityType'] as $item)
-                                                        <option value="{{ $item->id }}">
-                                                            {{ $item->name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-5 form-group">
-                                            <label for="exampleInputEmail1">Tahun Ajaran</label>
-                                            <div class="input-group">
-                                                <select class="form-control select2" id="schoolYear" name="schoolYear"
-                                                    style="width: 100%">
-                                                    <option value="" disabled selected>Pilih Tahun Ajaran</option>
-                                                    @foreach (range($data['startYear'], $data['endYear']) as $tahun)
-                                                        <option value="{{ $tahun }}">{{ $tahun }}</option>
-                                                    @endforeach
-                                                </select>
+                                                <input type="text" name="name" class="form-control" id="name"
+                                                    placeholder="Masukkan Nama">
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="row">
-                                        <div class="col-sm-6 form-group ">
-                                            <label for="tanggalPenerbitan">Tanggal Mulai</label>
-                                            <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                                <input type="date" name="startDate"
-                                                    class="form-control datetimepicker-input" id="startDate"
-                                                    data-target="#reservationdate" />
-                                                <div class="input-group-append" data-target="#reservationdate"
-                                                    data-toggle="datetimepicker">
-                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                                </div>
+                                        <div class="col-sm-12 form-group">
+                                            <label for="email">Email</label>
+                                            <div class="input-group">
+                                                <input type="email" name="email" class="form-control" id="email"
+                                                    placeholder="Masukkan Email">
                                             </div>
                                         </div>
-                                        <div class="col-sm-6 form-group ">
-                                            <label for="tanggalPenerbitan">Tanggal Selesai</label>
-                                            <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                                <input type="date" name="endDate" class="form-control datetimepicker-input"
-                                                    id="endDate" data-target="#reservationdate" />
-                                                <div class="input-group-append" data-target="#reservationdate"
-                                                    data-toggle="datetimepicker">
-                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                                </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6 form-group">
+                                            <label for="password">Password</label>
+                                            <div class="input-group">
+                                                <input type="password" name="password" class="form-control" id="password"
+                                                    placeholder="Masukkan Password">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 form-group">
+                                            <label for="konfirmasiPassword">Konfirmasi Password</label>
+                                            <div class="input-group">
+                                                <input type="password" name="password_confirmation" class="form-control"
+                                                    id="password_confirmation" placeholder="Konfirmasi Password">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6 form-group">
+                                            <label for="role">Role</label>
+                                            <div class="input-group">
+                                                <select class="form-control select2" id="roleId" name="roleId"
+                                                    style="width: 100%">
+                                                    <option value="" disabled selected>Pilih Role</option>
+                                                    @foreach ($data['role'] as $item)
+                                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 form-group">
+                                            <label for="status">Status</label>
+                                            <div class="input-group">
+                                                <select class="form-control select2" id="active" name="active"
+                                                    style="width: 100%">
+                                                    <option value="" disabled selected>Pilih Status</option>
+                                                    <option value="1">Aktif</option>
+                                                    <option value="2">Tidak Aktif</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -129,10 +134,10 @@
                                     <thead>
                                         <tr>
                                             <th class="text-center">#</th>
-                                            <th class="text-center">Jenis Kegiatan</th>
-                                            <th class="text-center">Tahun Ajaran</th>
-                                            <th class="text-center">Tanggal Mulai</th>
-                                            <th class="text-center">Tanggal Selesai</th>
+                                            <th class="text-center">Nama</th>
+                                            <th class="text-center">Role</th>
+                                            <th class="text-center">Email</th>
+                                            <th class="text-center">Status</th>
                                             <th class="text-center">Aksi</th>
                                         </tr>
                                     </thead>
@@ -140,16 +145,28 @@
                                         @php
                                             $i = 1;
                                         @endphp
-                                        @foreach ($data['activity'] as $item)
+                                        @foreach ($data['user'] as $item)
                                             <tr>
                                                 <td class="text-center">{{ $item->id }}</td>
-                                                <td>{{ $item->activityType->name }}</td>
-                                                <td>{{ $item->school_year . ' / ' . ++$item->school_year }}</td>
-                                                <td>{{ $item->start_date }}</td>
-                                                <td>{{ $item->end_date }}</td>
+                                                <td>{{ $item->name }}</td>
+                                                <td>
+                                                    @if ($item->role_id === null)
+                                                        Role tidak ditemukan
+                                                    @else
+                                                        {{ $item->role->name }}
+                                                    @endif
+                                                </td>
+                                                <td>{{ $item->email }}</td>
+                                                <td class="text-center">
+                                                    @if ($item->active === 1)
+                                                        <span class="badge badge-success">Aktif</span>
+                                                    @else
+                                                        <span class="badge badge-danger">Tidak Aktif</span>
+                                                    @endif
+                                                </td>
                                                 <td class="text-center">
                                                     <a class="btn btn-warning btn-sm"
-                                                        href="{{ route('activity.edit', ['activity' => $item->id]) }}"
+                                                        href="{{ route('user.edit', ['user' => $item->id]) }}"
                                                         data-bs-toggle="tooltip" title="Ubah"><i
                                                             class="fas fa-edit"></i></a>
                                                     <button class="btn btn-danger btn-sm delete" data-toggle="modal"
@@ -169,10 +186,10 @@
                                     <tfoot>
                                         <tr>
                                             <th class="text-center">#</th>
-                                            <th class="text-center">Jenis Kegiatan</th>
-                                            <th class="text-center">Tahun Ajaran</th>
-                                            <th class="text-center">Tanggal Mulai</th>
-                                            <th class="text-center">Tanggal Selesai</th>
+                                            <th class="text-center">Nama</th>
+                                            <th class="text-center">Role</th>
+                                            <th class="text-center">Email</th>
+                                            <th class="text-center">Status</th>
                                             <th class="text-center">Aksi</th>
                                         </tr>
                                     </tfoot>
@@ -200,7 +217,7 @@
                             <form action="#" method="post" class="form-horizontal" id="deleteForm">
                                 @method('delete')
                                 @csrf
-                                Apakah anda yakin akan menghapus Kegiatan <span name="textNote" id="textNote"></span>?
+                                Apakah anda yakin akan menghapus user <span name="textName" id="textName"></span>?
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
@@ -216,8 +233,9 @@
         <script src="{{ asset('src/plugins/jquery/jquery.min.js') }}"></script>
         <script type="text/javascript">
             function deleteItem(arr) {
-                $('#textNote').text(arr.note)
-                $('#deleteForm').attr('action', `activity/${arr.id}`)
+                $('#textName').text(arr.name)
+                $('#deleteForm').attr('action', `user/${arr.id}`)
             }
+
         </script>
     @endsection
