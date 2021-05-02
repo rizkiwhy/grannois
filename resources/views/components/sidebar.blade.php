@@ -122,7 +122,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('user.index')}}" class="nav-link">
+                                <a href="{{ route('user.index') }}" class="nav-link">
                                     <i class="fas fa-users nav-icon"></i>
                                     <p>User</p>
                                 </a>
@@ -141,7 +141,7 @@
             {{-- end 1 --}}
             <ul class="nav nav-treeview">
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('competencyofexpertise.index') }}" class="nav-link">
                         <i class="fas fa-th nav-icon"></i>
                         <p>Kompetensi Keahlian</p>
                     </a>

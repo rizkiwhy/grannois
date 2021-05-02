@@ -64,7 +64,7 @@ class UserController extends Controller
             ->orWhere('email', $request->email)
             ->get();
 
-        // data user
+        // data user duplikat
         if ($duplicateUser->count() > 0) {
             return redirect()
                 ->route('user.index')
@@ -167,7 +167,7 @@ class UserController extends Controller
             ->orWhere('email', $request->email)
             ->get();
 
-        // data user
+        // data user duplikat
         if ($duplicateUser->count() > 1) {
             return redirect()
                 ->route('user.index')

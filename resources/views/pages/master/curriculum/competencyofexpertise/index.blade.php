@@ -34,15 +34,24 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="{{ route('role.store') }}" method="post" class="form-horizontal"
+                                <form action="{{ route('competencyofexpertise.store') }}" method="post" class="form-horizontal"
                                     id="createForm">
                                     @csrf
                                     <div class="row">
-                                        <div class="col-sm-7 form-group">
+                                        <div class="col-sm-12 form-group">
                                             <label for="nama">Nama</label>
                                             <div class="input-group">
                                                 <input type="text" name="name" class="form-control" id="name"
                                                     placeholder="Masukkan Nama">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-7 form-group">
+                                            <label for="label">Label</label>
+                                            <div class="input-group">
+                                                <input type="text" name="label" class="form-control" id="label"
+                                                    placeholder="Masukkan Label">
                                             </div>
                                         </div>
                                         <div class="col-sm-5 form-group">
@@ -96,6 +105,7 @@
                                         <tr>
                                             <th class="text-center">#</th>
                                             <th class="text-center">Nama</th>
+                                            <th class="text-center">Label</th>
                                             <th class="text-center">Status</th>
                                             <th class="text-center">Aksi</th>
                                         </tr>
@@ -104,10 +114,11 @@
                                         @php
                                             $i = 1;
                                         @endphp
-                                        @foreach ($data['role'] as $item)
+                                        @foreach ($data['competencyOfExpertise'] as $item)
                                             <tr>
                                                 <td class="text-center">{{ $item->id }}</td>
                                                 <td>{{ $item->name }}</td>
+                                                <td>{{ $item->label }}</td>
                                                 <td class="text-center">
                                                     @if ($item->active === 1)
                                                         <span class="badge badge-success">Aktif</span>
@@ -117,7 +128,7 @@
                                                 </td>
                                                 <td class="text-center">
                                                     <a class="btn btn-warning btn-sm"
-                                                        href="{{ route('role.edit', ['role' => $item->id]) }}"
+                                                        href="{{ route('competencyofexpertise.edit', ['competencyofexpertise' => $item->id]) }}"
                                                         data-bs-toggle="tooltip" title="Ubah"><i
                                                             class="fas fa-edit"></i></a>
                                                     <button class="btn btn-danger btn-sm delete" data-toggle="modal"
@@ -138,6 +149,7 @@
                                         <tr>
                                             <th class="text-center">#</th>
                                             <th class="text-center">Nama</th>
+                                            <th class="text-center">Label</th>
                                             <th class="text-center">Status</th>
                                             <th class="text-center">Aksi</th>
                                         </tr>
@@ -166,7 +178,7 @@
                             <form action="#" method="post" class="form-horizontal" id="deleteForm">
                                 @method('delete')
                                 @csrf
-                                Apakah anda yakin akan menghapus Role <span name="textName" id="textName"></span>?
+                                Apakah anda yakin akan menghapus Kompetensi Keahlian <span name="textName" id="textName"></span>?
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
@@ -183,7 +195,7 @@
         <script type="text/javascript">
             function deleteItem(arr) {
                 $('#textName').text(arr.name)
-                $('#deleteForm').attr('action', `role/${arr.id}`)
+                $('#deleteForm').attr('action', `competencyofexpertise/${arr.id}`)
             }
 
         </script>

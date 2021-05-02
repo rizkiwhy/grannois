@@ -52,7 +52,7 @@ class RoleController extends Controller
         // cari data role duplikat
         $duplicateRole = Role::where('name', $request->name)->get();
 
-        // data activity role
+        // data role duplikat
         if ($duplicateRole->count() > 0) {
             return redirect()
                 ->route('role.index')
@@ -132,7 +132,7 @@ class RoleController extends Controller
         // cari data role duplikat
         $duplicateRole = Role::where('name', $request->name)->get();
 
-        // data activity role
+        // data role duplikat
         if ($duplicateRole->count() > 1) {
             return redirect()
                 ->route('role.index')

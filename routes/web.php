@@ -9,6 +9,7 @@ use App\Http\Controllers\GraduationController;
 use App\Http\Controllers\GraduationAnnouncementController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CompetencyOfExpertiseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +52,12 @@ Route::middleware(['auth', 'check.roleid:1,2'])->group(function () {
         'activity' => ActivityController::class,
         'announcement' => AnnouncementController::class,
         'graduation' => GraduationController::class,
+        'competencyofexpertise' => CompetencyOfExpertiseController::class,
+    ]);
+});
+
+Route::middleware(['auth', 'check.roleid:1,2'])->group(function () {
+    Route::resources([
         'role' => RoleController::class,
         'user' => UserController::class,
     ]);

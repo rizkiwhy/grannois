@@ -45,35 +45,42 @@
                         </div>
                         <div class="card-body">
                             <form
-                                action="{{ route('role.update', ['role' => $data['role']->id]) }}"
+                                action="{{ route('competencyofexpertise.update', ['competencyofexpertise' => $data['competencyOfExpertise']->id]) }}"
                                 method="post" class="form-horizontal" id="updateForm">
                                 @method('put')
                                 @csrf
                                 <div class="row">
-                                    <div class="col-sm-7 form-group">
+                                    <div class="col-sm-6 form-group">
                                         <label for="nama">Nama</label>
                                         <div class="input-group">
                                             <input type="text" name="name" class="form-control" id="name"
-                                                placeholder="Masukkan Nama" value="{{ $data['role']->name }}">
+                                                placeholder="Masukkan Nama" value="{{ $data['competencyOfExpertise']->name }}">
                                         </div>
                                     </div>
-                                    <div class="col-sm-5 form-group">
+                                    <div class="col-sm-2 form-group">
+                                        <label for="label">Label</label>
+                                        <div class="input-group">
+                                            <input type="text" name="label" class="form-control" id="label"
+                                                placeholder="Masukkan Label" value="{{ $data['competencyOfExpertise']->label }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 form-group">
                                         <label for="status">Status</label>
                                         <div class="input-group">
                                             <select class="form-control select2" id="active" name="active"
                                                 style="width: 100%">
-                                                <option value="{{ $data['role']->active }}" selected>
-                                                    @if ($data['role']->active == 1)
+                                                <option value="{{ $data['competencyOfExpertise']->active }}" selected>
+                                                    @if ($data['competencyOfExpertise']->active == 1)
                                                         Aktif
-                                                    @elseif ($data['role']->active == 2)
+                                                    @elseif ($data['competencyOfExpertise']->active == 2)
                                                         Tidak Aktif
                                                     @endif
                                                 </option>
-                                                @if ($data['role']->active == 1)
+                                                @if ($data['competencyOfExpertise']->active == 1)
                                                     <option value="2">
                                                         Tidak Aktif
                                                     </option>
-                                                @elseif ($data['role']->active == 2)
+                                                @elseif ($data['competencyOfExpertise']->active == 2)
                                                     <option value="1">
                                                         Lulus
                                                     </option>
