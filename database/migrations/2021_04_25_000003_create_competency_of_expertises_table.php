@@ -15,8 +15,8 @@ class CreateCompetencyOfExpertisesTable extends Migration
     {
         Schema::create('competency_of_expertises', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->string('label')->unique();
+            $table->string('name');
+            $table->string('label');
             $table
                 ->foreignId('study_program_of_expertise_id')
                 ->nullable()

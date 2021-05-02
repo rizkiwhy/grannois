@@ -7,6 +7,7 @@ use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\GraduationController;
 use App\Http\Controllers\GraduationAnnouncementController;
+use App\Http\Controllers\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,5 +50,6 @@ Route::middleware(['auth', 'check.roleid:1,2'])->group(function () {
         'activity' => ActivityController::class,
         'announcement' => AnnouncementController::class,
         'graduation' => GraduationController::class,
+        'role' => RoleController::class,
     ]);
 });

@@ -15,7 +15,7 @@ class CreateAreaOfExpertisesTable extends Migration
     {
         Schema::create('area_of_expertises', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('name');
             $table->boolean('active');
             $table->timestamps();
             $table->softDeletes();

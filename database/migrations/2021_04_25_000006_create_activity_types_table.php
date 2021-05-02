@@ -15,7 +15,7 @@ class CreateActivityTypesTable extends Migration
     {
         Schema::create('activity_types', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('name');
             $table->boolean('active');
             $table->timestamps();
             $table->softDeletes();

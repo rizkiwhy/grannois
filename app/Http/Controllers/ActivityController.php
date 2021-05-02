@@ -187,7 +187,7 @@ class ActivityController extends Controller
         $duplicateActivity = Activity::where('note', $note)->get();
 
         // data activity duplicate
-        if ($duplicateActivity->count() > 0) {
+        if ($duplicateActivity->count() > 1) {
             return redirect()
                 ->route('activity.index')
                 ->with('error_message', 'Entri duplikat ' . $note . '!');

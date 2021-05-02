@@ -20,11 +20,11 @@
                 </div>
                 <div class="col-sm-6">
                     <button class="btn btn-primary btn-sm mr-2 float-sm-right" data-toggle="modal"
-                        data-target="#modalCreate" data-backdrop="static">
+                        data-target="#createModal" data-backdrop="static">
                         <i class="fas fa-plus mr-2"></i>Tambah
                     </button>
                 </div>
-                <div class="modal fade" id="modalCreate">
+                <div class="modal fade" id="createModal">
                     <div class="modal-dialog modal-dialog-centered modal-md">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -34,66 +34,26 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="{{ route('graduation.store') }}" method="post" class="form-horizontal"
-                                    id="storeForm" enctype="multipart/form-data">
+                                <form action="{{ route('role.store') }}" method="post" class="form-horizontal"
+                                    id="createForm">
                                     @csrf
                                     <div class="row">
-                                        <div class="col-sm-12 form-group">
-                                            <label for="kegiatan">Kegiatan</label>
+                                        <div class="col-sm-7 form-group">
+                                            <label for="nama">Nama</label>
                                             <div class="input-group">
-                                                <select class="form-control select2" id="activityId" name="activityId"
-                                                    style="width: 100%;">
-                                                    <option value="" disabled selected>Pilih Kegiatan</option>
-                                                    @foreach ($data['activity'] as $item)
-                                                        <option value="{{ $item->id }}">
-                                                            {{ $item->note }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
+                                                <input type="text" name="name" class="form-control" id="name"
+                                                    placeholder="Masukkan Nama">
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-12 form-group">
-                                            <label for="kegiatan">Siswa</label>
+                                        <div class="col-sm-5 form-group">
+                                            <label for="status">Status</label>
                                             <div class="input-group">
-                                                <select class="form-control select2" id="studentId" name="studentId"
-                                                    style="width: 100%;">
-                                                    <option value="" disabled selected>Pilih Siswa</option>
-                                                    @foreach ($data['student'] as $item)
-                                                        <option value="{{ $item->id }}">
-                                                            {{ $item->user->name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-12 form-group">
-                                            <label for="kegiatan">Status</label>
-                                            <div class="input-group">
-                                                <select class="form-control select2" id="status" name="status"
-                                                    style="width: 100%;">
+                                                <select class="form-control select2" id="active" name="active"
+                                                    style="width: 100%">
                                                     <option value="" disabled selected>Pilih Status</option>
-                                                    <option value="1">
-                                                        Lulus
-                                                    </option>
-                                                    <option value="2">
-                                                        Tidak Lulus
-                                                    </option>
+                                                    <option value="1">Aktif</option>
+                                                    <option value="2">Tidak Aktif</option>
                                                 </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputFile">File input</label>
-                                        <div class="input-group">
-                                            <div class="custom-file">
-                                                <input class="form-control" type="file" id="certificate" name="certificate">
-                                            </div>
-                                            <div class="input-group-append">
-                                                <span class="input-group-text"><i class="fas fa-upload"></i></span>
                                             </div>
                                         </div>
                                     </div>
@@ -131,14 +91,12 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <table id="example1" class="table table-bordered table-striped">
+                                <table id="dataTable" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
                                             <th class="text-center">#</th>
-                                            <th class="text-center">Jenis Kegiatan</th>
-                                            <th class="text-center">Siswa</th>
+                                            <th class="text-center">Nama</th>
                                             <th class="text-center">Status</th>
-                                            <th class="text-center">Sertifikat</th>
                                             <th class="text-center">Aksi</th>
                                         </tr>
                                     </thead>
@@ -146,37 +104,29 @@
                                         @php
                                             $i = 1;
                                         @endphp
-                                        @foreach ($data['graduation'] as $item)
+                                        @foreach ($data['role'] as $item)
                                             <tr>
-                                                <td class="text-center">{{ $i }}</td>
-                                                <td>
-                                                    {{ $item->activity->note }}
-                                                </td>
-                                                <td>{{ $item->student->user->name }}</td>
-                                                <td>
-                                                    @if ($item->status)
-                                                        Lulus
+                                                <td class="text-center">{{ $item->id }}</td>
+                                                <td>{{ $item->name }}</td>
+                                                <td class="text-center">
+                                                    @if ($item->active === 1)
+                                                        <span class="badge badge-success">Aktif</span>
                                                     @else
-                                                        Tidak Lulus
+                                                        <span class="badge badge-danger">Tidak Aktif</span>
                                                     @endif
-                                                </td>
-                                                <td>
-                                                    <a href="{{ asset('certificate/') . '/' . $item->certificate }}"
-                                                        target="_blank" aria-disabled="true">
-                                                        {{ $item->certificate }}
-                                                    </a>
                                                 </td>
                                                 <td class="text-center">
                                                     <a class="btn btn-warning btn-sm"
-                                                        href="{{ route('graduation.edit', ['graduation' => $item->id]) }}"
+                                                        href="{{ route('role.edit', ['role' => $item->id]) }}"
                                                         data-bs-toggle="tooltip" title="Ubah"><i
                                                             class="fas fa-edit"></i></a>
-                                                    <button class="btn btn-danger btn-sm" data-toggle="modal"
+                                                    <button class="btn btn-danger btn-sm delete" data-toggle="modal"
                                                         onclick="deleteItem({{ $item }})"
                                                         data-target="#deleteModal" data-backdrop="static"
                                                         data-bs-toggle="tooltip" title="Hapus">
                                                         <i class="fas fa-trash"></i>
                                                     </button>
+
                                                 </td>
                                             </tr>
                                             @php
@@ -187,10 +137,8 @@
                                     <tfoot>
                                         <tr>
                                             <th class="text-center">#</th>
-                                            <th class="text-center">Jenis Kegiatan</th>
-                                            <th class="text-center">Siswa</th>
+                                            <th class="text-center">Nama</th>
                                             <th class="text-center">Status</th>
-                                            <th class="text-center">Sertifikat</th>
                                             <th class="text-center">Aksi</th>
                                         </tr>
                                     </tfoot>
@@ -218,7 +166,7 @@
                             <form action="#" method="post" class="form-horizontal" id="deleteForm">
                                 @method('delete')
                                 @csrf
-                                Apakah anda yakin akan menghapus Kelulusan <span name="textStudent" id="textStudent"></span>?
+                                Apakah anda yakin akan menghapus Role <span name="textName" id="textName"></span>?
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
@@ -234,8 +182,8 @@
         <script src="{{ asset('src/plugins/jquery/jquery.min.js') }}"></script>
         <script type="text/javascript">
             function deleteItem(arr) {
-                $('#textStudent').text(arr.student.user.name)
-                $('#deleteForm').attr('action', `graduation/${arr.id}`)
+                $('#textName').text(arr.name)
+                $('#deleteForm').attr('action', `role/${arr.id}`)
             }
 
         </script>

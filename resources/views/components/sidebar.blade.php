@@ -75,15 +75,15 @@
                 @if (in_array(Auth::user()->role_id, [1, 2, 3]))
                     <li class="nav-item">
                         <a href="{{ route('graduation.index') }}" class="nav-link">
-                        {{-- @if (in_array(Auth::user()->role_id, [1, 2]))
+                            {{-- @if (in_array(Auth::user()->role_id, [1, 2]))
                             @elseif(Auth::user()->role_id === 3) --}}
-                                {{-- <a href="{{ route('graduation/show/' . Auth::user()->role_id . ') }}" --}}
-                                    {{-- class="nav-link"> --}}
-                        {{-- @endif --}}
-                        <i class="nav-icon fas fa-graduation-cap"></i>
-                        <p>
-                            Kelulusan
-                        </p>
+                            {{-- <a href="{{ route('graduation/show/' . Auth::user()->role_id . ') }}" --}}
+                            {{-- class="nav-link"> --}}
+                            {{-- @endif --}}
+                            <i class="nav-icon fas fa-graduation-cap"></i>
+                            <p>
+                                Kelulusan
+                            </p>
                         </a>
                     </li>
 
@@ -116,7 +116,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="{{ route('role.index') }}" class="nav-link">
                                     <i class="fas fa-users-cog nav-icon"></i>
                                     <p>Role</p>
                                 </a>

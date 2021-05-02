@@ -17,7 +17,7 @@ class CreateStudyProgramOfExpertisesTable extends Migration
             Blueprint $table
         ) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('name');
             $table
                 ->foreignId('area_of_expertise_id')
                 ->constrained('area_of_expertises')

@@ -100,7 +100,7 @@
             var url = `http://grannois.herokuapp.com/api/graduation/${nis}`;
             var html = '';
 
-            if (nis.length > 0) {
+            if (nis.length === 9) {
                 $.ajax({
                     url: url,
                     method: "GET",

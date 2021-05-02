@@ -198,7 +198,7 @@ class AnnouncementController extends Controller
         )->get();
 
         // data announcement duplicate
-        if ($duplicateAnnouncement->count() > 1) {
+        if ($duplicateAnnouncement->count() > 0) {
             return redirect()
                 ->route('announcement.index')
                 ->with(
