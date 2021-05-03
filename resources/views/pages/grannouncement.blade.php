@@ -96,8 +96,8 @@
         $('#nis').on('input', function(event) {
             event.preventDefault();
             var nis = $(this).val();
-            // var url = `http://localhost:8000/api/graduation/${nis}`;
-            var url = `http://grannois.herokuapp.com/api/graduation/${nis}`;
+            var url = `http://localhost:8000/api/graduation/${nis}`;
+            // var url = `http://grannois.herokuapp.com/api/graduation/${nis}`;
             var html = '';
 
             if (nis.length === 9) {
@@ -105,6 +105,8 @@
                     url: url,
                     method: "GET",
                     success: function(response) {
+                        console.log(response)
+
                         function formatDate(input) {
                             var datePart = input.match(/\d+/g),
                                 year = datePart[0]
@@ -117,7 +119,7 @@
                         if (response.status == 'success') {
                             $('#report').empty();
                             html += `<div class="callout callout-success">
-                                        <h5>Selamat ${response.data.user.name}, anda lulus!</h5>
+                                        <h5>${response.graduationMessage}</h5>
                                         <p>Anda dinyatakan lulus dalam menempuh Ujian Sekolah dan Ujian Nasional Tahun Pelajaran ${response.data.graduation.activity.school_year}/${++response.data.graduation.activity.school_year}.
                                         <a href="#" class="text-blue" data-toggle="modal" data-target="#modal-lg" data-backdrop="static">
                                         <u>Klik disini untuk informasi lebih lanjut</u>
@@ -224,7 +226,6 @@
                                     </p>
                                     </div>`;
                         $('#report').append(html);
-                        console.log(response)
                     }
                 });
             } else {

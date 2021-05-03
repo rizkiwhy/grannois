@@ -76,6 +76,10 @@ class GraduationAnnouncementController extends Controller
                             'code' => 200,
                             'status' => 'success',
                             'message' => 'Data siswa berhasil ditemukan',
+                            'graduationMessage' =>
+                                'Selamat ' .
+                                $dataGraduation->user->name .
+                                ', anda lulus!',
                             'data' => $dataGraduation,
                         ],
                         200
