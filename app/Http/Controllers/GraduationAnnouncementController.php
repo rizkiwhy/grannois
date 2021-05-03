@@ -97,7 +97,7 @@ class GraduationAnnouncementController extends Controller
                     [
                         'code' => 500,
                         'status' => 'error',
-                        'message' => 'Data siswa tidak ditemukan',
+                        'message' => 'Data kelulusan tidak ditemukan',
                     ],
                     500
                 );

@@ -217,14 +217,14 @@
                     error: function(response) {
                         $('#report').empty();
                         html += `<div class="callout callout-danger">
-                                    <h5>Data siswa tidak ditemukan!</h5>
+                                    <h5>${response.responseJSON.message}!</h5>
                                     <p>
                                     &#8226; Silahkan periksa kembali NIS yang dimasukkan <br>
                                     &#8226; Hubungi Staff Kurikulum jika terjadi permasalahan <br>
                                     </p>
                                     </div>`;
                         $('#report').append(html);
-                        // console.log(response)
+                        console.log(response)
                     }
                 });
             } else {

@@ -268,6 +268,9 @@ class UserController extends Controller
         // delete user
         $destroyUser = $user->delete();
 
+        // delete siswa
+        $destroyStudent = $user->student->delete();
+
         // delete user berhasil
         if ($destroyUser) {
             return redirect()
