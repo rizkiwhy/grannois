@@ -1,9 +1,9 @@
 <!-- Navbar -->
 <nav class="main-header navbar navbar-expand navbar-primary navbar-dark fixed-top">
     <div class="container">
-        <a href="{{ asset('src/index3.html') }}" class="navbar-brand">
-            <img src="{{ asset('src/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
-                class="brand-image img-circle elevation-3" style="opacity: .8">
+        <a href="#" class="navbar-brand">
+            <img src="{{ asset('src/dist/img/11.png') }}" alt="AdminLTE Logo"
+                class="brand-image  elevation-3" style="opacity: .8">
             <span class="brand-text font-weight-light">Grannois</span>
         </a>
 

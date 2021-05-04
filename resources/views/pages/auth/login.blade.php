@@ -3,6 +3,8 @@
 
 <head>
     <meta charset="utf-8">
+    <link rel="shortcut icon" type="image/x-icon" href="/src/dist/img/11.png" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $data['page'] }} | {{ $data['app'] }} Information System</title>
 
@@ -24,8 +26,10 @@
 
     <div class="login-box">
         <div class="login-logo">
+            <img src="{{ asset('src/dist/img/11.png') }}" alt="User Avatar"
+                class="img-size-50"><br>
             {{-- <a href="../../index2.html"><b>Assek</b>APP</a> --}}
-            <b>{{ $data['app'] }}</b> Information System
+            <b>Granno</b>IS
         </div>
         <!-- /.login-logo -->
         <div class="card">
@@ -45,7 +49,7 @@
                     </div>
                     <label for="exampleInputPassword1">Password</label>
                     <div class="input-group form-group">
-                        <input type="password" name="password" class="form-control" id="password" 
+                        <input type="password" name="password" class="form-control" id="password"
                             placeholder="Enter Password">
                         <div class="input-group-append">
                             <div class="input-group-text">

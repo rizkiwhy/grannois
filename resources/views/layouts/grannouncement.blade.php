@@ -8,6 +8,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="/src/dist/img/11.png" />
     <title>@yield('title')</title>
 
     <!-- Google Font: Source Sans Pro -->
