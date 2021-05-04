@@ -5,7 +5,7 @@
     <a href="#" class="brand-link">
         <img src="{{ asset('src/dist/img/11.png') }}" alt="AdminLTE Logo" class="brand-image elevation-3"
             style="opacity: .8">
-        <span class="brand-text font-weight-dark">GrAnnouncement</span>
+        <span class="brand-text font-weight-dark">GrannoIS</span>
     </a>
 
     <!-- Sidebar -->
