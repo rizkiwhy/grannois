@@ -93,6 +93,8 @@ class AnnouncementController extends Controller
             'publish_date' => $request->publishDate,
             'publisher' => $publisher,
             'note' => $activity->note,
+            'content' => $request->content,
+            'letter_number' => $request->letterNumber,
         ]);
 
         // create announcement berhasil

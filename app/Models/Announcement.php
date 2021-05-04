@@ -10,7 +10,7 @@ class Announcement extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['activity_id', 'publish_date', 'publisher', 'note'];
+    protected $fillable = ['activity_id', 'publish_date', 'publisher', 'note', 'content', 'letter_number'];
 
     public function activity()
     {

@@ -43,7 +43,9 @@
     <!-- Daterange picker -->
     <link rel="stylesheet" href="{{ asset('src/plugins/daterangepicker/daterangepicker.css') }}">
     <!-- summernote -->
-    <link rel="stylesheet" href="{{ asset('src/plugins/summernote/summernote-bs4.min.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('src/plugins/summernote/summernote-bs4.min.css') }}"> --}}
+    <!-- include summernote css/js -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed layout-footer-fixed layout-navbar-fixed"
@@ -102,6 +104,9 @@
     <script src="{{ asset('src/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('src/dist/js/adminlte.min.js') }}"></script>
+    <!-- Summernote -->
+    {{-- <script src="{{ asset('src/plugins/summernote/summernote-bs4.min.js') }}"></script> --}}
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
     @if (Session::has('success_message'))
         <script>
@@ -133,6 +138,9 @@
         }
 
         $(function() {
+            // Summernote
+            $('#content').summernote()
+
             //Initialize Select2 Elements
             $('.select2').select2()
 

@@ -19,8 +19,8 @@ class StudentSeeder extends Seeder
         $dataUser = [
             [
                 // 'id' => Str::uuid(),
-                'name' => 'Aiki',
-                'email' => 'aiki@gais.com',
+                'name' => 'Rizki',
+                'email' => 'rizki@gais.com',
                 'password' => bcrypt('gais123'),
                 'role_id' => 3,
                 'active' => true,

@@ -33,6 +33,8 @@ class CreateAnnouncementsTable extends Migration
             //     ->onUpdate('cascade')
             //     ->onDelete('cascade');
             $table->string('note');
+            $table->string('letter_number');
+            $table->text('content');
             $table
                 ->foreignId('publisher')
                 ->constrained('users')

@@ -96,8 +96,8 @@
         $('#nis').on('input', function(event) {
             event.preventDefault();
             var nis = $(this).val();
-            // var url = `http://localhost:8000/api/graduation/${nis}`;
-            var url = `http://grannois.herokuapp.com/api/graduation/${nis}`;
+            var url = `http://localhost:8000/api/graduation/${nis}`;
+            // var url = `http://grannois.herokuapp.com/api/graduation/${nis}`;
             var html = '';
 
             if (nis.length === 9) {
@@ -137,55 +137,7 @@
                                         </div>
                                         <div class="modal-body">
                                         <div class="px-3">
-                                        <p style="text-align: center;">Nomor: 498/I02/SMKN 11 BDG/KM/2021</p><br>
-                                        <p style="text-align: justify;">
-                                        Kepala SMKN 11 Bandung sebagai Penanggung Jawab Penyelenggara Ujian Sekolah dan Ujian Nasional Tahun Pelajaran 2020/2021, berdasarkan peraturan Menteri Pendidikan dan Kebudayaan Republik Indonesia No. 3 tahun 2013, Prosedur Operasional Standar Penyelenggara Ujian Nasional Tahun Pelajaran 2020/2021 Badan Standar Nasional (BNSP) Nomor: 0022/P/BNSP/XI/2013 tanggal 30 November 2013 Serta hasil Rapat DInas Kepala Sekolah dengan Dewan Guru SMKN 11 Bandung pada tanggal 01 Mei 2021 pukul 09.00 WIB Tentang Keberhasilan kelas XII, dengan ini menyatakan bahwa:
-                                        <table class="table table-sm table-borderless col-md-8 offset-md-2">
-                                        <tbody>
-                                        <tr>
-                                        <td>Nama</td>
-                                        <td class="text-uppercase">: ${response.data.user.name}</td>
-                                        </tr>
-                                        <tr>
-                                        <td>Kompetensi Keahlian</td>
-                                        <td>: ${response.data.competency_of_expertise.name}</td>
-                                        </tr>
-                                        <tr>
-                                        <td>NIS</td>
-                                        <td>: ${response.data.student_parent_number}</td>
-                                        </tr>
-                                        <tr>
-                                        <td>NISN</td>
-                                        <td>: ${response.data.national_student_parent_number}</td>
-                                        </tr>
-                                        </tbody>
-                                        </table>
-                                        <br>
-                                        <table class="table table-bordered col-md-6 offset-md-3">
-                                        <tbody>
-                                        <tr>
-                                        <td class="text-center">LULUS</td>
-                                        <td class="text-center" style="text-decoration: line-through;">TIDAK LULUS</td>
-                                        </tr>
-                                        </tbody>
-                                        </table><br>
-                                        <p style="text-align: justify;">
-                                        Dalam menempuh Ujian Sekolah dan Ujian Nasional Tahun Pelajaran ${response.data.graduation.activity.school_year}/${++response.data.graduation.activity.school_year}.
-                                        </p>
-                                        <table class="table table-sm table-borderless col-md-4 offset-md-8">
-                                        <tbody>
-                                        <tr>
-                                        <td class="text-center">
-                                        Bandung, ${formatDate(response.data.graduation.activity.announcement[0].publish_date)}<br>
-                                        Kepala Sekolah<br>
-                                        <br>
-                                        <br>
-                                        Febiannisa Utami, S.Kom<br>
-                                        NIP 19980226 202104 2 0001<br>
-                                        </td>
-                                        </tr>
-                                        </tbody>
-                                        </table>
+                                        ${response.data.graduation.activity.announcement[0].content}
                                         </div>
                                         </div>
                                         <div class="modal-footer justify-content-between">
@@ -204,6 +156,13 @@
                                         </div>
                                         </div>`;
                             $('#report').append(html);
+                            $('#letterNumber').text(`: ${response.data.graduation.activity.announcement[0].letter_number}`)
+                            $('#studentName').text(`: ${response.data.user.name}`)
+                            $('#competencyOfExpertiseName').text(`: ${response.data.competency_of_expertise.name}`)
+                            $('#studentParentNumber').text(`: ${response.data.student_parent_number}`)
+                            $('#nationalStudentParentNumber').text(`: ${response.data.national_student_parent_number}`)
+                            $('#schoolYear').text(`${response.data.graduation.activity.school_year}/${++response.data.graduation.activity.school_year}`)
+                            $('#publishDate').text(`${formatDate(response.data.graduation.activity.announcement[0].publish_date)}`);
                         } else {
                             $('#report').empty();
                             html += `<div class="callout callout-danger">

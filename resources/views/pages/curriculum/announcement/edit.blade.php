@@ -51,7 +51,7 @@
                                 @csrf
                                 <div class="row">
                                     @if (Auth::user()->role_id === 1)
-                                        <div class="col-sm-4 form-group">
+                                        <div class="col-sm-6 form-group">
                                             <label for="penerbit">Penerbit</label>
                                             <div class="input-group">
                                                 <select class="form-control select2" id="publisher" name="publisher"
@@ -66,9 +66,9 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-sm-4 form-group">
+                                        <div class="col-sm-6 form-group">
                                         @elseif(Auth::user()->role_id === 2)
-                                            <div class="col-sm-8 form-group">
+                                            <div class="col-sm-12 form-group">
                                     @endif
                                     <label for="kegiatan">Kegiatan</label>
                                     <div class="input-group">
@@ -84,18 +84,36 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-sm-4 form-group ">
-                                    <label for="tanggalPenerbitan">Tanggal Penerbitan</label>
-                                    <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                        <input type="date" name="publishDate" class="form-control datetimepicker-input"
-                                            id="publishDate" data-target="#reservationdate"
-                                            value="{{ $data['announcement']->publish_date }}" />
-                                        <div class="input-group-append" data-target="#reservationdate"
-                                            data-toggle="datetimepicker">
-                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                        </div>
+                                
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4 form-group ">
+                                <label for="tanggalPenerbitan">Tanggal Penerbitan</label>
+                                <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                                    <input type="date" name="publishDate" class="form-control datetimepicker-input"
+                                        id="publishDate" data-target="#reservationdate"
+                                        value="{{ $data['announcement']->publish_date }}" />
+                                    <div class="input-group-append" data-target="#reservationdate"
+                                        data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-sm-8 form-group ">
+                                <label for="noSurat">No. Surat</label>
+                                <div class="input-group">
+                                    <input type="text" name="letterNumber" class="form-control" id="letterNumber"
+                                        placeholder="Masukkan No. Surat" value="{{$data['announcement']->letter_number}}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 form-group">
+                                <textarea id="content">
+                                        {{ $data['announcement']->content }}
+                                            {{-- Place <em>some</em> <u>text</u> <strong>here</strong> --}}
+                                        </textarea>
+                            </div>
                         </div>
                     </div>
                     <!-- /.card-body -->
@@ -118,6 +136,8 @@
     <!-- /.content -->
     <script src="{{ asset('src/plugins/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('src/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
+    <!-- Summernote -->
+    {{-- <script src="{{ asset('src/plugins/summernote/summernote-bs4.min.js') }}"></script> --}}
     <script>
         $('#form-edit-title').validate({
             rules: {

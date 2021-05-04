@@ -80,6 +80,7 @@ class GraduationAnnouncementController extends Controller
                                 'Selamat ' .
                                 $dataGraduation->user->name .
                                 ', anda lulus!',
+                            // 'contentOfAnnouncement' => $dataGraduation->graduation
                             'data' => $dataGraduation,
                         ],
                         200
