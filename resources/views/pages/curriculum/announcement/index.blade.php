@@ -93,7 +93,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-12 form-group">
-                                    <textarea id="content">
+                                    <textarea id="content" name="content">
                                             {{-- {{ $data['announcement']->content }} --}}
                                                 {{-- Place <em>some</em> <u>text</u> <strong>here</strong> --}}
                                             </textarea>
