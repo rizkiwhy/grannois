@@ -3,7 +3,7 @@
     <div class="container">
         <a href="#" class="navbar-brand">
             <img src="{{ asset('src/dist/img/11.png') }}" alt="AdminLTE Logo"
-                class="brand-image img-circle elevation-3" style="opacity: .8">
+                class="brand-image elevation-3" style="opacity: .8">
             <span class="brand-text font-weight-light">Grannois</span>
         </a>
 
