@@ -76,6 +76,8 @@ class AnnouncementController extends Controller
         $request->validate([
             'activityId' => 'required',
             'publishDate' => 'required',
+            'content' => 'required',
+            'letterNumber' => 'required',
         ]);
 
         // cari data activity untuk keperluan isi kolom note table announcement
@@ -182,6 +184,8 @@ class AnnouncementController extends Controller
         $request->validate([
             'activityId' => 'required',
             'publishDate' => 'required',
+            'content' => 'required',
+            'letterNumber' => 'required',
         ]);
 
         // cari data activity untuk keperluan isi kolom note table announcement
@@ -214,6 +218,8 @@ class AnnouncementController extends Controller
                 'publish_date' => $request->publishDate,
                 'publisher' => $publisher,
                 'note' => $activity->note,
+                'content' => $request->content,
+                'letter_number' => $request->letterNumber,
             ]);
             // update announcement berhasil
             if ($updateAnnouncement) {

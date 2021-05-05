@@ -3,7 +3,7 @@
 
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
-        <img src="{{ asset('src/dist/img/11.png') }}" alt="AdminLTE Logo" class="brand-image elevation-3"
+        <img src="{{ asset('src/dist/img/11.png') }}" alt="AdminLTE Logo" class="brand-image elevation-3 img-circle"
             style="opacity: .8">
         <span class="brand-text font-weight-dark">GrannoIS</span>
     </a>

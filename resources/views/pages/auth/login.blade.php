@@ -27,7 +27,7 @@
     <div class="login-box">
         <div class="login-logo">
             <img src="{{ asset('src/dist/img/11.png') }}" alt="User Avatar"
-                class="img-size-50"><br>
+                class="img-size-50 img-circle"><br>
             {{-- <a href="../../index2.html"><b>Assek</b>APP</a> --}}
             <b>Granno</b>IS
         </div>
