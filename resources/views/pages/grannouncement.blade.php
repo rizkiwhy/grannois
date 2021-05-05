@@ -96,8 +96,8 @@
         $('#nis').on('input', function(event) {
             event.preventDefault();
             var nis = $(this).val();
-            var url = `http://localhost:8000/api/graduation/${nis}`;
-            // var url = `http://grannois.herokuapp.com/api/graduation/${nis}`;
+            // var url = `http://localhost:8000/api/graduation/${nis}`;
+            var url = `http://grannois.herokuapp.com/api/graduation/${nis}`;
             var html = '';
 
             if (nis.length === 9) {
