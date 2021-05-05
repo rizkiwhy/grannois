@@ -109,7 +109,7 @@
                                                 <td class="text-center">{{ $item->id }}</td>
                                                 <td>{{ $item->name }}</td>
                                                 <td class="text-center">
-                                                    @if ($item->active === 1)
+                                                    @if ($item->active == 1)
                                                         <span class="badge badge-success">Aktif</span>
                                                     @else
                                                         <span class="badge badge-danger">Tidak Aktif</span>

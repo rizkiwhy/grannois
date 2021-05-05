@@ -31,7 +31,7 @@ class AnnouncementSeeder extends Seeder
                 'publisher' => 1,
                 'note' => 'Kelulusan 2021/2022',
                 'letter_number' => '500/I02/SMKN 11 BDG/KM/2021',
-                'content' => '<p style="text-align: justify;">test<>',
+                'content' => '<p style="text-align: justify;">test</p>',
             ],
         ];
 
