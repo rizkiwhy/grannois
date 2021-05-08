@@ -331,7 +331,7 @@ class GraduationController extends Controller
             // import data graduation gagal;
 
             $arr = explode("\n", str_replace("'", '', $qe->errorInfo[2]));
-            dd($arr[0]);
+            dd($arr);
 
             // // mysql
             // $errorCode = $qe->errorInfo[1];
