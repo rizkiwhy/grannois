@@ -331,7 +331,7 @@ class GraduationController extends Controller
             // import data graduation gagal;
 
             $arr = explode("\n", str_replace("'", '', $qe->errorInfo[2]));
-            dd($arr);
+            // dd($arr);
 
             // // mysql
             // $errorCode = $qe->errorInfo[1];
@@ -360,7 +360,7 @@ class GraduationController extends Controller
                 $errorMessage = str_replace("'", '', $qe->errorInfo[2]);
                 return redirect()
                     ->route('graduation.index')
-                    ->with('error_message', $errorMessage);
+                    ->with('error_message', $arr[0]);
             }
 
             // null
@@ -368,7 +368,7 @@ class GraduationController extends Controller
                 $errorMessage = str_replace("'", '', $qe->errorInfo[2]);
                 return redirect()
                     ->route('graduation.index')
-                    ->with('error_message', $errorMessage);
+                    ->with('error_message', $arr[0]);
             }
         }
 
