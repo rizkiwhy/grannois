@@ -285,35 +285,50 @@ class UserController extends Controller
             );
         } catch (QueryException $qe) {
             // import data user gagal
-            $errorCode = $qe->errorInfo[1];
+
+            // // mysql
+            // $errorCode = $qe->errorInfo[1];
+            // $errorMessage = str_replace("'", '', $qe->errorInfo[2]);
+
+            // // duplicate
+            // if ($errorCode == 1062) {
+            //     return redirect()
+            //         ->route('user.index')
+            //         ->with('error_message', $errorMessage);
+            // }
+
+            // // nulll
+            // if ($errorCode == 1048) {
+            //     return redirect()
+            //         ->route('graduation.index')
+            //         ->with('error_message', $errorMessage);
+            // }
+
+            // pgsql
+            $errorCode = $qe->errorInfo[0];
+            $errorMessage = explode(
+                "\n",
+                str_replace("'", '', $qe->errorInfo[2])
+            );
 
             // duplicate
-            if ($errorCode == 1062) {
-                $errorMessage = str_replace("'", '', $qe->errorInfo[2]);
-                return redirect()
-                    ->route('user.index')
-                    ->with('error_message', $errorMessage);
-            }
-
-            // nulll
-            if ($errorCode == 1048) {
-                $errorMessage = str_replace("'", '', $qe->errorInfo[2]);
+            if ($errorCode == 23505) {
                 return redirect()
                     ->route('graduation.index')
-                    ->with('error_message', $errorMessage);
+                    ->with('error_message', $errorMessage[0]);
+            }
+
+            // null
+            if ($errorCode == 23502) {
+                return redirect()
+                    ->route('graduation.index')
+                    ->with('error_message', $errorMessage[0]);
             }
         }
 
         // import data user berhasil
-        // if ($importUserData) {
         return redirect()
             ->route('user.index')
             ->with('success_message', 'Data User berhasil diimport!');
-        // }
-
-        // import data user gagal
-        // return redirect()
-        //     ->route('user.index')
-        //     ->with('error_message', 'Data User gagal diimmport');
     }
 }
