@@ -29,14 +29,14 @@ class StudentImport implements ToCollection, WithHeadingRow
 
             $createStudent = Student::create([
                 'user_id' => $createUser->id,
-                'place_of_birth' => $row['tempat_lahir'],
+                'place_of_birth' => $row['place_of_birth'],
                 'date_of_birth' => gmdate(
                     'Y-m-d',
-                    ($row['tanggal_lahir'] - 25569) * 86400
+                    ($row['date_of_birth'] - 25569) * 86400
                 ),
-                'student_parent_number' => $row['nis'],
-                'national_student_parent_number' => $row['nisn'],
-                'competency_of_expertise_id' => $row['kompetensi_keahlian_id'],
+                'student_parent_number' => $row['student_parent_number'],
+                'national_student_parent_number' => $row['national_student_parent_number'],
+                'competency_of_expertise_id' => $row['competency_of_expertise_id'],
             ]);
         }
     }
