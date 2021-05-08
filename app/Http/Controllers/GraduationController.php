@@ -330,7 +330,7 @@ class GraduationController extends Controller
         } catch (QueryException $qe) {
             // import data graduation gagal;
 
-            dd($qe);
+            dd($qe->errorInfo[2]);
 
             // mysql
             $errorCode = $qe->errorInfo[1];
