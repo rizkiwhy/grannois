@@ -330,26 +330,26 @@ class GraduationController extends Controller
         } catch (QueryException $qe) {
             // import data graduation gagal;
 
-            dd($qe->errorInfo[2]);
+            // dd(str_replace("'", '', $qe->errorInfo[2]));
 
-            // mysql
-            $errorCode = $qe->errorInfo[1];
+            // // mysql
+            // $errorCode = $qe->errorInfo[1];
 
-            // duplicate
-            if ($errorCode == 1062) {
-                $errorMessage = str_replace("'", '', $qe->errorInfo[2]);
-                return redirect()
-                    ->route('graduation.index')
-                    ->with('error_message', $errorMessage);
-            }
+            // // duplicate
+            // if ($errorCode == 1062) {
+            //     $errorMessage = str_replace("'", '', $qe->errorInfo[2]);
+            //     return redirect()
+            //         ->route('graduation.index')
+            //         ->with('error_message', $errorMessage);
+            // }
 
-            // null
-            if ($errorCode == 1048) {
-                $errorMessage = str_replace("'", '', $qe->errorInfo[2]);
-                return redirect()
-                    ->route('graduation.index')
-                    ->with('error_message', $errorMessage);
-            }
+            // // null
+            // if ($errorCode == 1048) {
+            //     $errorMessage = str_replace("'", '', $qe->errorInfo[2]);
+            //     return redirect()
+            //         ->route('graduation.index')
+            //         ->with('error_message', $errorMessage);
+            // }
 
             // pgsql
             $errorCode = $qe->errorInfo[0];
