@@ -313,7 +313,7 @@ class StudentController extends Controller
             $errorCode = $qe->errorInfo[1];
 
             // duplicate
-            if ($errorCode === 1062) {
+            if ($errorCode == 1062) {
                 $errorMessage = str_replace("'", '', $qe->errorInfo[2]);
                 return redirect()
                     ->route('student.index')
@@ -321,7 +321,7 @@ class StudentController extends Controller
             }
 
             // nulll
-            if ($errorCode === 1048) {
+            if ($errorCode == 1048) {
                 $errorMessage = str_replace("'", '', $qe->errorInfo[2]);
                 return redirect()
                     ->route('graduation.index')
@@ -330,15 +330,15 @@ class StudentController extends Controller
         }
 
         // import data student berhasil
-        if ($importStudentData) {
-            return redirect()
-                ->route('student.index')
-                ->with('success_message', 'Data Siswa berhasil diimport!');
-        }
-
-        // import data student gagal
+        // if ($importStudentData) {
         return redirect()
             ->route('student.index')
-            ->with('error_message', 'Data Siswa gagal diimport');
+            ->with('success_message', 'Data Siswa berhasil diimport!');
+        // }
+
+        // import data student gagal
+        // return redirect()
+        //     ->route('student.index')
+        //     ->with('error_message', 'Data Siswa gagal diimport');
     }
 }

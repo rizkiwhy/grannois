@@ -330,13 +330,13 @@ class GraduationController extends Controller
         } catch (QueryException $qe) {
             // import data graduation gagal;
             $errorCode = $qe->errorInfo[1];
-            if ($errorCode === 1062) {
+            if ($errorCode == 1062) {
                 $errorMessage = str_replace("'", '', $qe->errorInfo[2]);
                 return redirect()
                     ->route('graduation.index')
                     ->with('error_message', $errorMessage);
             }
-            if ($errorCode === 1048) {
+            if ($errorCode == 1048) {
                 $errorMessage = str_replace("'", '', $qe->errorInfo[2]);
                 return redirect()
                     ->route('graduation.index')
@@ -345,15 +345,15 @@ class GraduationController extends Controller
         }
 
         // import data graduation berhasil
-        if ($importGraduationData) {
-            return redirect()
-                ->route('graduation.index')
-                ->with('success_message', 'Data Kelulusan berhasil diimport!');
-        }
+        // if ($importGraduationData) {
+        return redirect()
+            ->route('graduation.index')
+            ->with('success_message', 'Data Kelulusan berhasil diimport!');
+        // }
 
         // import data student gagal
-        return redirect()
-            ->route('student.index')
-            ->with('error_message', 'Data Siswa gagal diimport');
+        // return redirect()
+        //     ->route('student.index')
+        //     ->with('error_message', 'Data Siswa gagal diimport');
     }
 }

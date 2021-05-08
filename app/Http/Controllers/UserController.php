@@ -288,7 +288,7 @@ class UserController extends Controller
             $errorCode = $qe->errorInfo[1];
 
             // duplicate
-            if ($errorCode === 1062) {
+            if ($errorCode == 1062) {
                 $errorMessage = str_replace("'", '', $qe->errorInfo[2]);
                 return redirect()
                     ->route('user.index')
@@ -296,7 +296,7 @@ class UserController extends Controller
             }
 
             // nulll
-            if ($errorCode === 1048) {
+            if ($errorCode == 1048) {
                 $errorMessage = str_replace("'", '', $qe->errorInfo[2]);
                 return redirect()
                     ->route('graduation.index')
@@ -305,15 +305,15 @@ class UserController extends Controller
         }
 
         // import data user berhasil
-        if ($importUserData) {
-            return redirect()
-                ->route('user.index')
-                ->with('success_message', 'Data User berhasil diimport!');
-        }
-
-        // import data user gagal
+        // if ($importUserData) {
         return redirect()
             ->route('user.index')
-            ->with('error_message', 'Data User gagal diimmport');
+            ->with('success_message', 'Data User berhasil diimport!');
+        // }
+
+        // import data user gagal
+        // return redirect()
+        //     ->route('user.index')
+        //     ->with('error_message', 'Data User gagal diimmport');
     }
 }
