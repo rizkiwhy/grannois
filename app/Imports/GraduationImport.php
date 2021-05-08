@@ -26,11 +26,11 @@ class GraduationImport implements ToCollection, WithHeadingRow
 
         foreach ($collection as $key => $row) {
             // cek validasi data
-            // $validator = Validator::make(
-            //     $row,
-            //     $this->rules(),
-            //     $this->validationMessages()
-            // );
+            $validator = Validator::make(
+                $row,
+                $this->rules(),
+                $this->validationMessages()
+            );
 
             $createUser = user::create([
                 'role_id' => $row['role_id'],
@@ -61,30 +61,30 @@ class GraduationImport implements ToCollection, WithHeadingRow
         }
     }
 
-    // public function rules(): array
-    // {
-    //     return [
-    //         'name' => 'required|unique:users',
-    //         'email' => 'required|email|unique:users',
-    //         'password' => 'required|min:5',
-    //         'role_id' => 'required',
-    //         'active' => 'required',
-    //         'tempat_lahir' => 'required',
-    //         'tanggal_lahir' => 'required',
-    //         'nis' => 'required',
-    //         'nisn' => 'required',
-    //         'kompetensi_keahlian_id' => 'required',
-    //         'activity_id' => 'required',
-    //         'status' => 'required',
-    //         'certificate' => 'required',
-    //     ];
-    // }
+    public function rules(): array
+    {
+        return [
+            'name' => 'required|unique:users',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:5',
+            'role_id' => 'required',
+            'active' => 'required',
+            'tempat_lahir' => 'required',
+            'tanggal_lahir' => 'required',
+            'nis' => 'required',
+            'nisn' => 'required',
+            'kompetensi_keahlian_id' => 'required',
+            'activity_id' => 'required',
+            'status' => 'required',
+            'certificate' => 'required',
+        ];
+    }
 
-    // public function validationMessages()
-    // {
-    //     return [
-    //         'name.required' => trans('user.name_is_required'),
-    //         'email.required' => trans('user.email_is_required'),
-    //     ];
-    // }
+    public function validationMessages()
+    {
+        return [
+            'name.required' => trans('user.name_is_required'),
+            'email.required' => trans('user.email_is_required'),
+        ];
+    }
 }

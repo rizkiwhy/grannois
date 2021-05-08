@@ -327,10 +327,6 @@ class GraduationController extends Controller
                 new GraduationImport(),
                 $request->file('graduationData')
             );
-        } catch (\Error $e) {
-            return redirect()
-                ->route('graduation.index')
-                ->with('error_message', 'Error');
         } catch (QueryException $qe) {
             // import data graduation gagal;
             $errorCode = $qe->errorInfo[1];
