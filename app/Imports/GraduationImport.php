@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use Illuminate\Support\Facades\Validator;
 
-class GraduationImport implements ToCollection, WithHeadingRow, WithValidation
+class GraduationImport implements ToCollection, WithHeadingRow
 {
     /**
      * @param Collection $collection
@@ -26,11 +26,11 @@ class GraduationImport implements ToCollection, WithHeadingRow, WithValidation
 
         foreach ($collection as $key => $row) {
             // cek validasi data
-            $validator = Validator::make(
-                $row,
-                $this->rules(),
-                $this->validationMessages()
-            );
+            // $validator = Validator::make(
+            //     $row,
+            //     $this->rules(),
+            //     $this->validationMessages()
+            // );
 
             $createUser = user::create([
                 'role_id' => $row['role_id'],
@@ -42,14 +42,14 @@ class GraduationImport implements ToCollection, WithHeadingRow, WithValidation
 
             $createStudent = Student::create([
                 'user_id' => $createUser->id,
-                'place_of_birth' => $row['tempat_lahir'],
+                'place_of_birth' => $row['place_of_birth'],
                 'date_of_birth' => gmdate(
                     'Y-m-d',
-                    ($row['tanggal_lahir'] - 25569) * 86400
+                    ($row['date_of_birth'] - 25569) * 86400
                 ),
-                'student_parent_number' => $row['nis'],
-                'national_student_parent_number' => substr($row['nisn'], 1),
-                'competency_of_expertise_id' => $row['kompetensi_keahlian_id'],
+                'student_parent_number' => $row['student_parent_number'],
+                'national_student_parent_number' => substr($row['national_student_parent_number'], 1),
+                'competency_of_expertise_id' => $row['competency_of_expertise_id'],
             ]);
 
             $createGratudation = Graduation::create([
@@ -61,19 +61,30 @@ class GraduationImport implements ToCollection, WithHeadingRow, WithValidation
         }
     }
 
-    public function rules(): array
-    {
-        return [
-            'name' => 'required|unique:users',
-            'email' => 'required|email|unique:users',
-        ];
-    }
+    // public function rules(): array
+    // {
+    //     return [
+    //         'name' => 'required|unique:users',
+    //         'email' => 'required|email|unique:users',
+    //         'password' => 'required|min:5',
+    //         'role_id' => 'required',
+    //         'active' => 'required',
+    //         'tempat_lahir' => 'required',
+    //         'tanggal_lahir' => 'required',
+    //         'nis' => 'required',
+    //         'nisn' => 'required',
+    //         'kompetensi_keahlian_id' => 'required',
+    //         'activity_id' => 'required',
+    //         'status' => 'required',
+    //         'certificate' => 'required',
+    //     ];
+    // }
 
-    public function validationMessages()
-    {
-        return [
-            'name.unique' => trans('name_must_be_unique'),
-            'email.unique' => trans('email_must_be_unique'),
-        ];
-    }
+    // public function validationMessages()
+    // {
+    //     return [
+    //         'name.required' => trans('user.name_is_required'),
+    //         'email.required' => trans('user.email_is_required'),
+    //     ];
+    // }
 }

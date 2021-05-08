@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 use App\Models\Graduation;
 use App\Models\Activity;
 use App\Models\Student;
@@ -313,9 +314,7 @@ class GraduationController extends Controller
                 ->route('graduation.index')
                 ->with(
                     'error_message',
-                    'Kelulusan ' .
-                        $tempGraduationStudentName .
-                        'gagal dihapus!'
+                    'Kelulusan ' . $tempGraduationStudentName . 'gagal dihapus!'
                 );
         }
     }
@@ -337,6 +336,12 @@ class GraduationController extends Controller
                     ->route('graduation.index')
                     ->with('error_message', $errorMessage);
             }
+            if ($errorCode === 1048) {
+                $errorMessage = str_replace("'", '', $qe->errorInfo[2]);
+                return redirect()
+                    ->route('graduation.index')
+                    ->with('error_message', $errorMessage);
+            }
         }
 
         // import data graduation berhasil
@@ -345,5 +350,10 @@ class GraduationController extends Controller
                 ->route('graduation.index')
                 ->with('success_message', 'Data Kelulusan berhasil diimport!');
         }
+
+        // import data student gagal
+        return redirect()
+            ->route('student.index')
+            ->with('error_message', 'Data Siswa gagal diimport');
     }
 }

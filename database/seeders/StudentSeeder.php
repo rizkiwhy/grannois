@@ -55,13 +55,18 @@ class StudentSeeder extends Seeder
         for ($i = 0; $i < count($dataUser); $i++) {
             $createUser = User::create($dataUser[$i]);
             Student::create([
-                // 'id' => Str::uuid(),
-                // 'user_id' => $dataUser[$i]['id'],
                 'user_id' => $createUser->id,
-            ])
-                // ->where('user_id', $dataUser[$i]['id'])
-                ->where('user_id', $createUser->id)
-                ->update($dataStudent[$i]);
+                'place_of_birth' => $dataStudent[$i]['place_of_birth'],
+                'date_of_birth' => $dataStudent[$i]['date_of_birth'],
+                'student_parent_number' =>
+                    $dataStudent[$i]['student_parent_number'],
+                'national_student_parent_number' =>
+                    $dataStudent[$i]['national_student_parent_number'],
+                'competency_of_expertise_id' =>
+                    $dataStudent[$i]['competency_of_expertise_id'],
+            ]);
+            // ->where('user_id', $createUser->id)
+            // ->update($dataStudent[$i]);
         }
     }
 }

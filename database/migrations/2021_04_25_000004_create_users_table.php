@@ -24,8 +24,8 @@ class CreateUsersTable extends Migration
                 ->constrained('roles')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->string('name');
-            $table->string('email');
+            $table->string('name')->unique();
+            $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

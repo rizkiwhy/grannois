@@ -25,14 +25,13 @@ class CreateStudentsTable extends Migration
             //     ->foreignUuid('user_id')
             //     ->nullable()
             //     ->constrained('users');
-            $table->string('place_of_birth')->nullable();
-            $table->date('date_of_birth')->nullable();
-            $table->string('student_parent_number')->nullable();
-            $table->string('national_student_parent_number')->nullable();
+            $table->string('place_of_birth');
+            $table->date('date_of_birth');
+            $table->string('student_parent_number');
+            $table->string('national_student_parent_number');
             $table->uuid('origin_school_id')->nullable();
             $table
                 ->foreignId('competency_of_expertise_id')
-                ->nullable()
                 ->constrained('competency_of_expertises')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');

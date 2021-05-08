@@ -142,6 +142,7 @@
                                                         siswa</a>), agar meminimalisir kesalahan
                                                     pada saat import data siswa.</li>
                                                 <li>Dilarang untuk mengubah nama kolom (table header).</li>
+                                                <li>Semua kolom wajib diisi (tidak boleh ada yang kosong).</li>
                                                 <li>Id, Nama & Email harus unik (tidak boleh duplikat).</li>
                                                 <li>Hubungi Staff Kurikulum jika terjadi permasalahan.</li>
                                             </ul>

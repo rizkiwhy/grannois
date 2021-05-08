@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\QueryException;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Student;
@@ -285,10 +286,20 @@ class UserController extends Controller
         } catch (QueryException $qe) {
             // import data user gagal
             $errorCode = $qe->errorInfo[1];
+
+            // duplicate
             if ($errorCode === 1062) {
                 $errorMessage = str_replace("'", '', $qe->errorInfo[2]);
                 return redirect()
                     ->route('user.index')
+                    ->with('error_message', $errorMessage);
+            }
+
+            // nulll
+            if ($errorCode === 1048) {
+                $errorMessage = str_replace("'", '', $qe->errorInfo[2]);
+                return redirect()
+                    ->route('graduation.index')
                     ->with('error_message', $errorMessage);
             }
         }
