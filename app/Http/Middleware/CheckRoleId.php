@@ -19,7 +19,7 @@ class CheckRoleId
     {
         if (
             in_array($request->user()->role_id, $roleIds) &&
-            Auth::user()->active === 1
+            Auth::user()->active == 1
         ) {
             return $next($request);
         } else {
