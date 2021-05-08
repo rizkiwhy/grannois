@@ -330,7 +330,7 @@ class GraduationController extends Controller
         } catch (QueryException $qe) {
             // import data graduation gagal;
 
-            $arr = explode(str_replace("'", '', $qe->errorInfo[2]), 2);
+            $arr = explode("\n", str_replace("'", '', $qe->errorInfo[2]));
             dd($arr[0]);
 
             // // mysql
