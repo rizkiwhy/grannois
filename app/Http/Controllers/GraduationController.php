@@ -322,28 +322,28 @@ class GraduationController extends Controller
     public function import(Request $request)
     {
         // import data graduation
-        // try {
-        $importGraduationData = \Excel::import(
-            new GraduationImport(),
-            $request->file('graduationData')
-        );
-        // }
-        // } catch (QueryException $qe) {
-        //     // import data graduation gagal;
-        //     $errorCode = $qe->errorInfo[1];
-        //     if ($errorCode == 1062) {
-        //         $errorMessage = str_replace("'", '', $qe->errorInfo[2]);
-        //         return redirect()
-        //             ->route('graduation.index')
-        //             ->with('error_message', $errorMessage);
-        //     }
-        //     if ($errorCode == 1048) {
-        //         $errorMessage = str_replace("'", '', $qe->errorInfo[2]);
-        //         return redirect()
-        //             ->route('graduation.index')
-        //             ->with('error_message', $errorMessage);
-        //     }
-        // }
+        try {
+            $importGraduationData = \Excel::import(
+                new GraduationImport(),
+                $request->file('graduationData')
+            );
+            // }
+        } catch (PDOException $qe) {
+            // import data graduation gagal;
+            $errorCode = $qe->errorInfo[1];
+            if ($errorCode == 1062) {
+                $errorMessage = str_replace("'", '', $qe->errorInfo[2]);
+                return redirect()
+                    ->route('graduation.index')
+                    ->with('error_message', $errorMessage);
+            }
+            if ($errorCode == 1048) {
+                $errorMessage = str_replace("'", '', $qe->errorInfo[2]);
+                return redirect()
+                    ->route('graduation.index')
+                    ->with('error_message', $errorMessage);
+            }
+        }
 
         // import data graduation berhasil
         // if ($importGraduationData) {
