@@ -327,23 +327,48 @@ class GraduationController extends Controller
                 new GraduationImport(),
                 $request->file('graduationData')
             );
-            // }
-        } catch (\PDOException $qe) {
+        } catch (QueryException $qe) {
             // import data graduation gagal;
-            dd($qe);
-            // $errorCode = $qe->errorInfo[1];
-            // if ($errorCode == 1062) {
-            //     $errorMessage = str_replace("'", '', $qe->errorInfo[2]);
-            //     return redirect()
-            //         ->route('graduation.index')
-            //         ->with('error_message', $errorMessage);
-            // }
-            // if ($errorCode == 1048) {
-            //     $errorMessage = str_replace("'", '', $qe->errorInfo[2]);
-            //     return redirect()
-            //         ->route('graduation.index')
-            //         ->with('error_message', $errorMessage);
-            // }
+
+            // dd($qe);
+
+            // mysql
+            $errorCode = $qe->errorInfo[1];
+
+            // duplicate
+            if ($errorCode == 1062) {
+                $errorMessage = str_replace("'", '', $qe->errorInfo[2]);
+                return redirect()
+                    ->route('graduation.index')
+                    ->with('error_message', $errorMessage);
+            }
+
+            // null
+            if ($errorCode == 1048) {
+                $errorMessage = str_replace("'", '', $qe->errorInfo[2]);
+                return redirect()
+                    ->route('graduation.index')
+                    ->with('error_message', $errorMessage);
+            }
+
+            // pgsql
+            $errorCode = $qe->errorInfo[0];
+
+            // duplicate
+            if ($errorCode == 23505) {
+                $errorMessage = str_replace("'", '', $qe->errorInfo[2]);
+                return redirect()
+                    ->route('graduation.index')
+                    ->with('error_message', $errorMessage);
+            }
+
+            // null
+            if ($errorCode == 23502) {
+                $errorMessage = str_replace("'", '', $qe->errorInfo[2]);
+                return redirect()
+                    ->route('graduation.index')
+                    ->with('error_message', $errorMessage);
+            }
         }
 
         // import data graduation berhasil
