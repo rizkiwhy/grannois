@@ -35,11 +35,12 @@ class CreateGraduationsTable extends Migration
                 ->foreignId('student_id')
                 ->constrained('students')
                 ->onUpdate('cascade')
-                ->onDelete('cascade');
+                ->onDelete('cascade')
+                ->unique();
             $table->boolean('status');
             $table->string('certificate');
             $table->timestamps();
-            $table->softDeletes();
+            // $table->softDeletes();
         });
     }
 

@@ -23,6 +23,10 @@
                         data-target="#createModal" data-backdrop="static">
                         <i class="fas fa-plus mr-2"></i>Tambah
                     </button>
+                    <button class="btn btn-primary btn-sm mr-2 float-sm-right" data-toggle="modal"
+                        data-target="#importModal" data-backdrop="static">
+                        <i class="fas fa-file-import mr-2"></i>Import
+                    </button>
                 </div>
                 <div class="modal fade" id="createModal">
                     <div class="modal-dialog modal-dialog-centered modal-md">
@@ -119,8 +123,8 @@
                                         <div class="col-sm-12 form-group">
                                             <label for="kompetensiKeahlian">Kompetensi Keahlian</label>
                                             <div class="input-group">
-                                                <select class="form-control select2" id="competencyOfExpertiseId" name="competencyOfExpertiseId"
-                                                    style="width: 100%;">
+                                                <select class="form-control select2" id="competencyOfExpertiseId"
+                                                    name="competencyOfExpertiseId" style="width: 100%;">
                                                     <option value="" disabled selected>Pilih Kompetensi Keahlian</option>
                                                     @foreach ($data['competencyOfExpertise'] as $item)
                                                         <option value="{{ $item->id }}">
@@ -151,6 +155,62 @@
                             <div class="modal-footer justify-content-between">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
                                 <button type="submit" class="btn btn-primary">Simpan</button>
+                            </div>
+                            </form>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <div class="modal fade" id="importModal">
+                    <div class="modal-dialog modal-dialog-centered modal-md">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Import {{ $data['page'] }}</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="{{ route('student.import') }}" method="post" class="form-horizontal"
+                                    id="importForm" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="position-relative p-3 bg-gray mb-3" style="width: 100%">
+                                        <div class="ribbon-wrapper">
+                                            <div class="ribbon bg-primary">
+                                                Notes
+                                            </div>
+                                        </div>
+                                        <small>
+                                            <ul>
+                                                <li>Data Siswa dapat diimport menggunakan file dengan format excel (.xlsx).
+                                                </li>
+                                                <li>Silahkan ubah data file berikut (<a
+                                                        href="{{ asset('import/data_student.xlsx') }}" download>example
+                                                        data
+                                                        siswa</a>), agar meminimalisir kesalahan
+                                                    pada saat import data siswa.</li>
+                                                <li>Dilarang untuk mengubah nama kolom (table header).</li>
+                                                <li>Id, Nama & Email harus unik (tidak boleh duplikat).</li>
+                                                <li>Hubungi Staff Kurikulum jika terjadi permasalahan.</li>
+                                            </ul>
+                                        </small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputFile">File Upload</label>
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                <input class="form-control" type="file" id="studentData" name="studentData">
+                                            </div>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i class="fas fa-upload"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                                <button type="submit" class="btn btn-primary">Import</button>
                             </div>
                             </form>
                         </div>

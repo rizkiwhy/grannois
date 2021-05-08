@@ -56,6 +56,15 @@ Route::middleware(['auth', 'check.roleid:1,2'])->group(function () {
         'competencyofexpertise' => CompetencyOfExpertiseController::class,
         'student' => StudentController::class,
     ]);
+
+    Route::post('student/import', [StudentController::class, 'import'])->name(
+        'student.import'
+    );
+
+    Route::post('graduation/import', [
+        GraduationController::class,
+        'import',
+    ])->name('graduation.import');
 });
 
 Route::middleware(['auth', 'check.roleid:1,2'])->group(function () {
@@ -63,4 +72,8 @@ Route::middleware(['auth', 'check.roleid:1,2'])->group(function () {
         'role' => RoleController::class,
         'user' => UserController::class,
     ]);
+
+    Route::post('user/import', [UserController::class, 'import'])->name(
+        'user.import'
+    );
 });

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Student;
+use App\Imports\UserImport;
 
 class UserController extends Controller
 {
@@ -51,67 +52,48 @@ class UserController extends Controller
     {
         // validasi data request
         $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
+            'name' => 'required|unique:users',
+            'email' => 'required|email|unique:users',
             'password' => 'required|min:5|confirmed',
             'password_confirmation' => 'required|min:5',
             'roleId' => 'required',
             'active' => 'required',
         ]);
 
-        // cari data user duplikat
-        $duplicateUser = User::where('name', $request->name)
-            ->orWhere('email', $request->email)
-            ->get();
+        // create user
+        $createUser = User::create([
+            'name' => ucwords($request->name),
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role_id' => $request->roleId,
+            'active' => $request->active,
+        ]);
 
-        // data user duplikat
-        if ($duplicateUser->count() > 0) {
+        // check role (student)
+        if ($request->roleId == 3) {
+            // get latest user created
+            $user = User::orderByDesc('created_at')->first();
+
+            // create student
+            $createStudent = Student::create([
+                'user_id' => $user->id,
+            ]);
+        }
+
+        // create user berhasil
+        if ($createUser) {
             return redirect()
                 ->route('user.index')
                 ->with(
-                    'error_message',
-                    'Entri duplikat ' .
-                        $request->name .
-                        ' or ' .
-                        $request->email .
-                        '!'
+                    'success_message',
+                    'User ' .
+                        ucwords($createUser->name) .
+                        ' berhasil ditambahkan!'
                 );
         } else {
-            // create user
-            $createUser = User::create([
-                'name' => ucwords($request->name),
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'role_id' => $request->roleId,
-                'active' => $request->active,
-            ]);
-
-            // check role (student)
-            if ($request->roleId == 3) {
-                // get latest user created
-                $user = User::orderByDesc('created_at')->first();
-
-                // create student
-                $createStudent = Student::create([
-                    'user_id' => $user->id,
-                ]);
-            }
-
-            // create user berhasil
-            if ($createUser) {
-                return redirect()
-                    ->route('user.index')
-                    ->with(
-                        'success_message',
-                        'User ' .
-                            ucwords($createUser->name) .
-                            ' berhasil ditambahkan!'
-                    );
-            } else {
-                return redirect()
-                    ->route('user.index')
-                    ->with('error_message', 'User gagal ditambahkan!');
-            }
+            return redirect()
+                ->route('user.index')
+                ->with('error_message', 'User gagal ditambahkan!');
         }
     }
 
@@ -179,79 +161,79 @@ class UserController extends Controller
                         $request->email .
                         '!'
                 );
-        } else {
-            if (
-                $request->password == null &&
-                $request->password_confirmation == null
-            ) {
-                // validasi data request
-                $request->validate([
-                    'name' => 'required',
-                    'email' => 'required|email',
-                    'roleId' => 'required',
-                    'active' => 'required',
-                ]);
-
-                // update user
-                $updateUser = $user->update([
-                    'name' => ucwords($request->name),
-                    'email' => $request->email,
-                    // 'password' => Hash::make($request->password),
-                    'role_id' => $request->roleId,
-                    'active' => $request->active,
-                ]);
-            } else {
-                // validasi data request
-                $request->validate([
-                    'name' => 'required',
-                    'email' => 'required|email',
-                    'password' => 'required|min:5|confirmed',
-                    'password_confirmation' => 'required|min:5',
-                    'roleId' => 'required',
-                    'active' => 'required',
-                ]);
-
-                // update user
-                $updateUser = $user->update([
-                    'name' => ucwords($request->name),
-                    'email' => $request->email,
-                    'password' => Hash::make($request->password),
-                    'role_id' => $request->roleId,
-                    'active' => $request->active,
-                ]);
-            }
-
-            // get latest user updated
-            $updatedUser = User::orderByDesc('updated_at')->first();
-
-            // ubah menjadi student (create data student)
-            if ($request->roleId == 3 && $tempRoleId != 3) {
-                // create student
-                $createStudent = Student::create([
-                    'user_id' => $updatedUser->id,
-                ]);
-            }
-
-            // ubah menjadi bukan student (delete data student)
-            if ($request->role_id != 3 && $tempRoleId == 3) {
-                // delete student
-                $createStudent = $user->student()->delete();
-            }
-
-            // update user berhasil
-            if ($updateUser) {
-                return redirect()
-                    ->route('user.index')
-                    ->with(
-                        'success_message',
-                        'User ' . ucwords($request->name) . ' berhasil diubah!'
-                    );
-            } else {
-                return redirect()
-                    ->route('user.index')
-                    ->with('error_message', 'User gagal diubah!');
-            }
         }
+
+        // password & password_confirmation tidak diisi
+        if (
+            $request->password == null &&
+            $request->password_confirmation == null
+        ) {
+            // validasi data request
+            $request->validate([
+                'name' => 'required',
+                'email' => 'required|email',
+                'roleId' => 'required',
+                'active' => 'required',
+            ]);
+
+            // update user
+            $updateUser = $user->update([
+                'name' => ucwords($request->name),
+                'email' => $request->email,
+                // 'password' => Hash::make($request->password),
+                'role_id' => $request->roleId,
+                'active' => $request->active,
+            ]);
+        } else {
+            // validasi data request
+            $request->validate([
+                'name' => 'required',
+                'email' => 'required|email',
+                'password' => 'required|min:5|confirmed',
+                'password_confirmation' => 'required|min:5',
+                'roleId' => 'required',
+                'active' => 'required',
+            ]);
+
+            // update user
+            $updateUser = $user->update([
+                'name' => ucwords($request->name),
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role_id' => $request->roleId,
+                'active' => $request->active,
+            ]);
+        }
+
+        // get latest user updated
+        $updatedUser = User::orderByDesc('updated_at')->first();
+
+        // ubah menjadi student (create data student)
+        if ($request->roleId == 3 && $tempRoleId != 3) {
+            // create student
+            $createStudent = Student::create([
+                'user_id' => $updatedUser->id,
+            ]);
+        }
+
+        // ubah menjadi bukan student (delete data student)
+        if ($request->role_id != 3 && $tempRoleId == 3) {
+            // delete student
+            $createStudent = $user->student()->delete();
+        }
+
+        // update user berhasil
+        if ($updateUser) {
+            return redirect()
+                ->route('user.index')
+                ->with(
+                    'success_message',
+                    'User ' . ucwords($request->name) . ' berhasil diubah!'
+                );
+        }
+        return redirect()
+            ->route('user.index')
+            ->with('error_message', 'User gagal diubah!');
     }
 
     /**
@@ -263,7 +245,10 @@ class UserController extends Controller
     public function destroy($id)
     {
         // cari user
-        $user = User::withTrashed()->find($id);
+        $user = User::find($id);
+
+        //temp user name
+        $tempUserName = $user->name;
 
         // delete user
         $destroyUser = $user->delete();
@@ -277,15 +262,47 @@ class UserController extends Controller
                 ->route('user.index')
                 ->with(
                     'success_message',
-                    'User ' . $user->name . ' berhasil dihapus!'
+                    'User ' . $tempUserName . ' berhasil dihapus!'
                 );
         } else {
             return redirect()
                 ->route('user.index')
                 ->with(
                     'error_message',
-                    'User ' . $user->name . 'gagal dihapus!'
+                    'User ' . $tempUserName . 'gagal dihapus!'
                 );
         }
+    }
+
+    public function import(Request $request)
+    {
+        // import data user
+        try {
+            $importUserData = \Excel::import(
+                new UserImport(),
+                $request->file('userData')
+            );
+        } catch (QueryException $qe) {
+            // import data user gagal
+            $errorCode = $qe->errorInfo[1];
+            if ($errorCode === 1062) {
+                $errorMessage = str_replace("'", '', $qe->errorInfo[2]);
+                return redirect()
+                    ->route('user.index')
+                    ->with('error_message', $errorMessage);
+            }
+        }
+
+        // import data user berhasil
+        if ($importUserData) {
+            return redirect()
+                ->route('user.index')
+                ->with('success_message', 'Data User berhasil diimport!');
+        }
+
+        // import data user gagal
+        return redirect()
+            ->route('user.index')
+            ->with('error_message', 'Data User gagal diimmport');
     }
 }

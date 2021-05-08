@@ -17,7 +17,10 @@ class CheckRoleId
      */
     public function handle(Request $request, Closure $next, ...$roleIds)
     {
-        if (in_array($request->user()->role_id, $roleIds)) {
+        if (
+            in_array($request->user()->role_id, $roleIds) &&
+            Auth::user()->active === 1
+        ) {
             return $next($request);
         } else {
             return redirect()

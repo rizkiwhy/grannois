@@ -8,6 +8,7 @@ use App\Models\Student;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\CompetencyOfExpertise;
+use App\Imports\StudentImport;
 
 class StudentController extends Controller
 {
@@ -58,8 +59,8 @@ class StudentController extends Controller
     {
         // validasi data request
         $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
+            'name' => 'required|unique:users',
+            'email' => 'required|email|unique:users',
             'password' => 'required|min:5|confirmed',
             'password_confirmation' => 'required|min:5',
             'roleId' => 'required',
@@ -70,67 +71,49 @@ class StudentController extends Controller
             'nationalStudentParentNumber' => 'required',
         ]);
 
-        // cari data user duplikat
-        $duplicateUser = User::where('name', $request->name)
-            ->orWhere('email', $request->email)
-            ->get();
+        // create user
+        $createUser = User::create([
+            'name' => ucwords($request->name),
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role_id' => $request->roleId,
+            'active' => $request->active,
+        ]);
 
-        // data user duplikat
-        if ($duplicateUser->count() > 0) {
-            return redirect()
-                ->route('user.index')
-                ->with(
-                    'error_message',
-                    'Entri duplikat ' .
-                        $request->name .
-                        ' or ' .
-                        $request->email .
-                        '!'
-                );
-        } else {
-            // create user
-            $createUser = User::create([
-                'name' => ucwords($request->name),
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'role_id' => $request->roleId,
-                'active' => $request->active,
+        // check role (student)
+        if ($request->roleId == 3) {
+            // get latest user created
+            $user = User::orderByDesc('created_at')->first();
+
+            // create student
+            $createStudent = Student::create([
+                'user_id' => $user->id,
+                'place_of_birth' => $request->placeOfBirth,
+                'date_of_birth' => $request->dateOfBirth,
+                'student_parent_number' => $request->studentParentNumber,
+                'national_student_parent_number' =>
+                    $request->nationalStudentParentNumber,
+                'competency_of_expertise_id' =>
+                    $request->competencyOfExpertiseId,
             ]);
-
-            // check role (student)
-            if ($request->roleId == 3) {
-                // get latest user created
-                $user = User::orderByDesc('created_at')->first();
-
-                // create student
-                $createStudent = Student::create([
-                    'user_id' => $user->id,
-                    'place_of_birth' => $request->placeOfBirth,
-                    'date_of_birth' => $request->dateOfBirth,
-                    'student_parent_number' => $request->studentParentNumber,
-                    'national_student_parent_number' =>
-                        $request->nationalStudentParentNumber,
-                    'competency_of_expertise_id' =>
-                        $request->competencyOfExpertiseId,
-                ]);
-            }
-
-            // create user berhasil
-            if ($createUser) {
-                return redirect()
-                    ->route('student.index')
-                    ->with(
-                        'success_message',
-                        'Siswa ' .
-                            ucwords($createUser->name) .
-                            ' berhasil ditambahkan!'
-                    );
-            } else {
-                return redirect()
-                    ->route('student.index')
-                    ->with('error_message', 'Siswa gagal ditambahkan!');
-            }
         }
+
+        // create student berhasil
+        if ($createUser) {
+            return redirect()
+                ->route('student.index')
+                ->with(
+                    'success_message',
+                    'Siswa ' .
+                        ucwords($createUser->name) .
+                        ' berhasil ditambahkan!'
+                );
+        }
+
+        // create student gagal
+        return redirect()
+            ->route('student.index')
+            ->with('error_message', 'Siswa gagal ditambahkan!');
     }
 
     /**
@@ -203,80 +186,80 @@ class StudentController extends Controller
                         $request->email .
                         '!'
                 );
-        } else {
-            if (
-                $request->password == null &&
-                $request->password_confirmation == null
-            ) {
-                // validasi data request
-                $request->validate([
-                    'name' => 'required',
-                    'email' => 'required|email',
-                    'roleId' => 'required',
-                    'active' => 'required',
-                    'placeOfBirth' => 'required',
-                    'dateOfBirth' => 'required',
-                    'studentParentNumber' => 'required',
-                    'nationalStudentParentNumber' => 'required',
-                ]);
+        }
 
-                // update user
-                $updateUser = $student->user->update([
-                    'name' => ucwords($request->name),
-                    'email' => $request->email,
-                    'role_id' => $request->roleId,
-                    'active' => $request->active,
-                ]);
-            } else {
-                // validasi data request
-                $request->validate([
-                    'name' => 'required',
-                    'email' => 'required|email',
-                    'password' => 'required|min:5|confirmed',
-                    'password_confirmation' => 'required|min:5',
-                    'roleId' => 'required',
-                    'active' => 'required',
-                    'placeOfBirth' => 'required',
-                    'dateOfBirth' => 'required',
-                    'studentParentNumber' => 'required',
-                    'nationalStudentParentNumber' => 'required',
-                ]);
-
-                // update user
-                $updateUser = $student->user->update([
-                    'name' => ucwords($request->name),
-                    'email' => $request->email,
-                    'password' => Hash::make($request->password),
-                    'role_id' => $request->roleId,
-                    'active' => $request->active,
-                ]);
-            }
-
-            // update siswa
-            $student->update([
-                'place_of_birth' => $request->placeOfBirth,
-                'date_of_birth' => $request->dateOfBirth,
-                'student_parent_number' => $request->studentParentNumber,
-                'national_student_parent_number' =>
-                    $request->nationalStudentParentNumber,
-                'competency_of_expertise_id' =>
-                    $request->competencyOfExpertiseId,
+        if (
+            $request->password == null &&
+            $request->password_confirmation == null
+        ) {
+            // validasi data request
+            $request->validate([
+                'name' => 'required',
+                'email' => 'required|email',
+                'roleId' => 'required',
+                'active' => 'required',
+                'placeOfBirth' => 'required',
+                'dateOfBirth' => 'required',
+                'studentParentNumber' => 'required',
+                'nationalStudentParentNumber' => 'required',
             ]);
 
-            // update user berhasil
-            if ($updateUser) {
-                return redirect()
-                    ->route('student.index')
-                    ->with(
-                        'success_message',
-                        'Siswa ' . ucwords($request->name) . ' berhasil diubah!'
-                    );
-            } else {
-                return redirect()
-                    ->route('student.index')
-                    ->with('error_message', 'Siswa gagal diubah!');
-            }
+            // update user
+            $updateUser = $student->user->update([
+                'name' => ucwords($request->name),
+                'email' => $request->email,
+                'role_id' => $request->roleId,
+                'active' => $request->active,
+            ]);
+        } else {
+            // validasi data request
+            $request->validate([
+                'name' => 'required',
+                'email' => 'required|email',
+                'password' => 'required|min:5|confirmed',
+                'password_confirmation' => 'required|min:5',
+                'roleId' => 'required',
+                'active' => 'required',
+                'placeOfBirth' => 'required',
+                'dateOfBirth' => 'required',
+                'studentParentNumber' => 'required',
+                'nationalStudentParentNumber' => 'required',
+            ]);
+
+            // update user
+            $updateUser = $student->user->update([
+                'name' => ucwords($request->name),
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role_id' => $request->roleId,
+                'active' => $request->active,
+            ]);
         }
+
+        // update siswa
+        $student->update([
+            'place_of_birth' => $request->placeOfBirth,
+            'date_of_birth' => $request->dateOfBirth,
+            'student_parent_number' => $request->studentParentNumber,
+            'national_student_parent_number' =>
+                $request->nationalStudentParentNumber,
+            'competency_of_expertise_id' => $request->competencyOfExpertiseId,
+        ]);
+
+        // update student berhasil
+        if ($updateUser) {
+            return redirect()
+                ->route('student.index')
+                ->with(
+                    'success_message',
+                    'Siswa ' . ucwords($request->name) . ' berhasil diubah!'
+                );
+        }
+
+        // update student gagal
+        return redirect()
+            ->route('student.index')
+            ->with('error_message', 'Siswa gagal diubah!');
     }
 
     /**
@@ -288,13 +271,16 @@ class StudentController extends Controller
     public function destroy($id)
     {
         // cari student
-        $student = Student::withTrashed()->find($id);
+        $student = Student::find($id);
 
-        // delete user
-        $destroyUser = $student->user->delete();
+        // temp student name
+        $tempStudentName = $student->user->name;
 
         // delete siswa
         $destroyStudent = $student->delete();
+
+        // delete user
+        $destroyUser = $student->user->delete();
 
         // delete siswa berhasil
         if ($destroyStudent) {
@@ -302,15 +288,46 @@ class StudentController extends Controller
                 ->route('student.index')
                 ->with(
                     'success_message',
-                    'Siswa ' . $student->name . ' berhasil dihapus!'
-                );
-        } else {
-            return redirect()
-                ->route('student.index')
-                ->with(
-                    'error_message',
-                    'Siswa ' . $student->name . 'gagal dihapus!'
+                    'Siswa ' . $tempStudentName . ' berhasil dihapus!'
                 );
         }
+        return redirect()
+            ->route('student.index')
+            ->with(
+                'error_message',
+                'Siswa ' . $tempStudentName . 'gagal dihapus!'
+            );
+    }
+
+    public function import(Request $request)
+    {
+        // import data student
+        try {
+            $importStudentData = \Excel::import(
+                new StudentImport(),
+                $request->file('studentData')
+            );
+        } catch (QueryException $qe) {
+            // import data student gagal;
+            $errorCode = $qe->errorInfo[1];
+            if ($errorCode === 1062) {
+                $errorMessage = str_replace("'", '', $qe->errorInfo[2]);
+                return redirect()
+                    ->route('student.index')
+                    ->with('error_message', $errorMessage);
+            }
+        }
+
+        // import data student berhasil
+        if ($importStudentData) {
+            return redirect()
+                ->route('student.index')
+                ->with('success_message', 'Data Siswa berhasil diimport!');
+        }
+
+        // import data student gagal
+        return redirect()
+            ->route('student.index')
+            ->with('error_message', 'Data Siswa gagal diimport');
     }
 }

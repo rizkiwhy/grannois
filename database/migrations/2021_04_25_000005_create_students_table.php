@@ -20,7 +20,7 @@ class CreateStudentsTable extends Migration
                 ->foreignId('user_id')
                 ->constrained('users')
                 ->onDelete('cascade')
-                ->onUpdate('cascade');
+                ->onUpdate('cascade')->unique();
             // $table
             //     ->foreignUuid('user_id')
             //     ->nullable()
@@ -37,7 +37,7 @@ class CreateStudentsTable extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->timestamps();
-            $table->softDeletes();
+            // $table->softDeletes();
         });
     }
 

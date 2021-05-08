@@ -105,7 +105,6 @@
                     url: url,
                     method: "GET",
                     success: function(response) {
-                        console.log(response)
 
                         function formatDate(input) {
                             var datePart = input.match(/\d+/g),

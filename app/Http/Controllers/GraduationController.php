@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Graduation;
 use App\Models\Activity;
 use App\Models\Student;
+use App\Imports\GraduationImport;
 
 class GraduationController extends Controller
 {
@@ -79,7 +80,7 @@ class GraduationController extends Controller
         // validasi data request
         $request->validate([
             'activityId' => 'required',
-            'studentId' => 'required',
+            'studentId' => 'required|unique:students,id',
             'status' => 'required',
             'certificate' => 'required',
         ]);
@@ -289,7 +290,10 @@ class GraduationController extends Controller
     public function destroy($id)
     {
         // cari graduation
-        $graduation = Graduation::withTrashed()->find($id);
+        $graduation = Graduation::find($id);
+
+        // temp student name
+        $tempGraduationStudentName = $graduation->student->user->name;
 
         // delete graduation
         $destroyGraduation = $graduation->delete();
@@ -301,7 +305,7 @@ class GraduationController extends Controller
                 ->with(
                     'success_message',
                     'Kelulusan ' .
-                        $graduation->student->user->name .
+                        $tempGraduationStudentName .
                         ' berhasil dihapus!'
                 );
         } else {
@@ -310,9 +314,36 @@ class GraduationController extends Controller
                 ->with(
                     'error_message',
                     'Kelulusan ' .
-                        $announcement->student->user->name .
+                        $tempGraduationStudentName .
                         'gagal dihapus!'
                 );
+        }
+    }
+
+    public function import(Request $request)
+    {
+        // import data graduation
+        try {
+            $importGraduationData = \Excel::import(
+                new GraduationImport(),
+                $request->file('graduationData')
+            );
+        } catch (QueryException $qe) {
+            // import data graduation gagal;
+            $errorCode = $qe->errorInfo[1];
+            if ($errorCode === 1062) {
+                $errorMessage = str_replace("'", '', $qe->errorInfo[2]);
+                return redirect()
+                    ->route('graduation.index')
+                    ->with('error_message', $errorMessage);
+            }
+        }
+
+        // import data graduation berhasil
+        if ($importGraduationData) {
+            return redirect()
+                ->route('graduation.index')
+                ->with('success_message', 'Data Kelulusan berhasil diimport!');
         }
     }
 }
