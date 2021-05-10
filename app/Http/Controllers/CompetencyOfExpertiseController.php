@@ -53,6 +53,9 @@ class CompetencyOfExpertiseController extends Controller
             'active' => 'required',
         ]);
 
+        // set active
+        $active = $request->active === '1' ? true : false;
+
         // cari data kompetensi keahlian duplikat
         $duplicateCompetencyOfExpertise = CompetencyOfExpertise::where(
             'name',
@@ -74,7 +77,7 @@ class CompetencyOfExpertiseController extends Controller
             $createCompetencyOfExpertise = CompetencyOfExpertise::create([
                 'name' => $request->name,
                 'label' => $request->label,
-                'active' => $request->active,
+                'active' => $active,
             ]);
             // create keahlian duplikat berhasil
             if ($createCompetencyOfExpertise) {
@@ -146,6 +149,9 @@ class CompetencyOfExpertiseController extends Controller
             'active' => 'required',
         ]);
 
+        // set active
+        $active = $request->active === '1' ? true : false;
+
         // cari data kompetensi keahlian duplikat
         $duplicateCompetencyOfExpertise = CompetencyOfExpertise::where('name', $request->name)->orWhere('label', $request->label)->get();
 
@@ -161,7 +167,7 @@ class CompetencyOfExpertiseController extends Controller
             // update kompetensi keahlian
             $updateCompetencyOfExpertise = CompetencyOfExpertise::find($id)->update([
                 'name' => $request->name,
-                'active' => $request->active,
+                'active' => $active,
             ]);
             // create kompetensi keahlian berhasil
             if ($updateCompetencyOfExpertise) {

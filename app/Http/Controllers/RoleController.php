@@ -49,6 +49,9 @@ class RoleController extends Controller
             'active' => 'required',
         ]);
 
+        // set active
+        $active = $request->active === '1' ? true : false;
+
         // cari data role duplikat
         $duplicateRole = Role::where('name', $request->name)->get();
 
@@ -64,7 +67,7 @@ class RoleController extends Controller
             // create role
             $createRole = Role::create([
                 'name' => $request->name,
-                'active' => $request->active,
+                'active' => $active,
             ]);
             // create role berhasil
             if ($createRole) {
@@ -129,6 +132,9 @@ class RoleController extends Controller
             'active' => 'required',
         ]);
 
+        // set active
+        $active = $request->active === '1' ? true : false;
+
         // cari data role duplikat
         $duplicateRole = Role::where('name', $request->name)->get();
 
@@ -144,7 +150,7 @@ class RoleController extends Controller
             // update role
             $updateRole = Role::find($id)->update([
                 'name' => $request->name,
-                'active' => $request->active,
+                'active' => $active,
             ]);
             // create role berhasil
             if ($updateRole) {

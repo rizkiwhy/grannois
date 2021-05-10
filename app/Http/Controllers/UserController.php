@@ -61,13 +61,16 @@ class UserController extends Controller
             'active' => 'required',
         ]);
 
+        // set active
+        $active = $request->active === '1' ? true : false;
+
         // create user
         $createUser = User::create([
             'name' => ucwords($request->name),
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role_id' => $request->roleId,
-            'active' => $request->active,
+            'active' => $active,
         ]);
 
         // check role (student)
@@ -143,6 +146,9 @@ class UserController extends Controller
         // cari user yang akan diubah
         $user = User::find($id);
 
+        // set active
+        $active = $request->active === '1' ? true : false;
+
         $tempRoleId = $user->role_id;
 
         // cari data user duplikat
@@ -183,7 +189,7 @@ class UserController extends Controller
                 'email' => $request->email,
                 // 'password' => Hash::make($request->password),
                 'role_id' => $request->roleId,
-                'active' => $request->active,
+                'active' => $active,
             ]);
         } else {
             // validasi data request
@@ -202,7 +208,7 @@ class UserController extends Controller
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'role_id' => $request->roleId,
-                'active' => $request->active,
+                'active' => $active,
             ]);
         }
 

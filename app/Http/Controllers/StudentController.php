@@ -72,13 +72,16 @@ class StudentController extends Controller
             'nationalStudentParentNumber' => 'required',
         ]);
 
+        // set active
+        $active = $request->active === '1' ? true : false;
+
         // create user
         $createUser = User::create([
             'name' => ucwords($request->name),
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role_id' => $request->roleId,
-            'active' => $request->active,
+            'active' => $active,
         ]);
 
         // check role (student)
@@ -168,6 +171,9 @@ class StudentController extends Controller
         // cari siswa yang akan diubah
         $student = Student::find($id);
 
+        // set active
+        $active = $request->active === '1' ? true : false;
+
         $tempRoleId = $student->user->role_id;
 
         // cari data user duplikat
@@ -210,7 +216,7 @@ class StudentController extends Controller
                 'name' => ucwords($request->name),
                 'email' => $request->email,
                 'role_id' => $request->roleId,
-                'active' => $request->active,
+                'active' => $active,
             ]);
         } else {
             // validasi data request
@@ -233,7 +239,7 @@ class StudentController extends Controller
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'role_id' => $request->roleId,
-                'active' => $request->active,
+                'active' => $active,
             ]);
         }
 

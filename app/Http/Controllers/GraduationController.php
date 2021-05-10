@@ -87,7 +87,7 @@ class GraduationController extends Controller
         ]);
 
         // set status
-        $status = $request->status === '1' ? 1 : 2;
+        $status = $request->status === '1' ? true : false;
 
         // get nis from student
         $student = Student::find($request->studentId);
@@ -224,7 +224,7 @@ class GraduationController extends Controller
         ]);
 
         // set status
-        $status = $request->status === '1' ? 1 : 2;
+        $status = $request->status === '1' ? true : false;
 
         // get nis from student
         $student = Student::find($request->studentId);
