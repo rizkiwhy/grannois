@@ -110,7 +110,7 @@
                                                     </option>
                                                 @elseif ($data['user']->active == 2)
                                                     <option value="1">
-                                                        Lulus
+                                                        Aktif
                                                     </option>
                                                 @endif
                                             </select>
