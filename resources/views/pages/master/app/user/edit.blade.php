@@ -100,7 +100,7 @@
                                                 <option value="{{ $data['user']->active }}" selected>
                                                     @if ($data['user']->active == 1)
                                                         Aktif
-                                                    @elseif ($data['user']->active == 2)
+                                                    @elseif ($data['user']->active == 0)
                                                         Tidak Aktif
                                                     @endif
                                                 </option>
@@ -108,7 +108,7 @@
                                                     <option value="0">
                                                         Tidak Aktif
                                                     </option>
-                                                @elseif ($data['user']->active == 2)
+                                                @elseif ($data['user']->active == 0)
                                                     <option value="1">
                                                         Aktif
                                                     </option>

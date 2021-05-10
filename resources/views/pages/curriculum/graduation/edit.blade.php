@@ -89,7 +89,7 @@
                                                 <option value="{{ $data['graduation']->status }}" selected>
                                                     @if ($data['graduation']->status == 1)
                                                         Lulus
-                                                    @elseif ($data['graduation']->status == 2)
+                                                    @elseif ($data['graduation']->status == 0)
                                                         Tidak Lulus
                                                     @endif
                                                 </option>
@@ -97,7 +97,7 @@
                                                     <option value="0">
                                                         Tidak Lulus
                                                     </option>
-                                                @elseif ($data['graduation']->status == 2)
+                                                @elseif ($data['graduation']->status == 0)
                                                     <option value="1">
                                                         Lulus
                                                     </option>
