@@ -51,8 +51,6 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
-
         // validasi data request
         $request->validate([
             'name' => 'required|unique:users',
@@ -142,8 +140,6 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request->all());
-
         // cari user yang akan diubah
         $user = User::find($id);
 
