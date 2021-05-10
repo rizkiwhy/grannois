@@ -217,7 +217,7 @@
                                                 </td>
                                                 <td>{{ $item->student->user->name }}</td>
                                                 <td>
-                                                    @if ($item->status === 1)
+                                                    @if ($item->status == 1)
                                                         Lulus
                                                     @else
                                                         Tidak Lulus
