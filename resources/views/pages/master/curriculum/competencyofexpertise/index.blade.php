@@ -61,7 +61,7 @@
                                                     style="width: 100%">
                                                     <option value="" disabled selected>Pilih Status</option>
                                                     <option value="1">Aktif</option>
-                                                    <option value="2">Tidak Aktif</option>
+                                                    <option value="0">Tidak Aktif</option>
                                                 </select>
                                             </div>
                                         </div>

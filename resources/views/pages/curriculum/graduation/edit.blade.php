@@ -94,7 +94,7 @@
                                                     @endif
                                                 </option>
                                                 @if ($data['graduation']->status == 1)
-                                                    <option value="2">
+                                                    <option value="0">
                                                         Tidak Lulus
                                                     </option>
                                                 @elseif ($data['graduation']->status == 2)

@@ -77,7 +77,7 @@
                                                     @endif
                                                 </option>
                                                 @if ($data['competencyOfExpertise']->active == 1)
-                                                    <option value="2">
+                                                    <option value="0">
                                                         Tidak Aktif
                                                     </option>
                                                 @elseif ($data['competencyOfExpertise']->active == 2)

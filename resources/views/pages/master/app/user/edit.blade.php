@@ -105,7 +105,7 @@
                                                     @endif
                                                 </option>
                                                 @if ($data['user']->active == 1)
-                                                    <option value="2">
+                                                    <option value="0">
                                                         Tidak Aktif
                                                     </option>
                                                 @elseif ($data['user']->active == 2)

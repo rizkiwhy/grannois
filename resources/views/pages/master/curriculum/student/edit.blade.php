@@ -140,7 +140,7 @@
                                                     @endif
                                                 </option>
                                                 @if ($data['student']->user->active == 1)
-                                                    <option value="2">
+                                                    <option value="0">
                                                         Tidak Aktif
                                                     </option>
                                                 @elseif ($data['student']->user->active == 2)

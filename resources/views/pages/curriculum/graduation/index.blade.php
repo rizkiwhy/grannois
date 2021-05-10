@@ -83,7 +83,7 @@
                                                     <option value="1">
                                                         Lulus
                                                     </option>
-                                                    <option value="2">
+                                                    <option value="0">
                                                         Tidak Lulus
                                                     </option>
                                                 </select>

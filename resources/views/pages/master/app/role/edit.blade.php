@@ -70,7 +70,7 @@
                                                     @endif
                                                 </option>
                                                 @if ($data['role']->active == 1)
-                                                    <option value="2">
+                                                    <option value="0">
                                                         Tidak Aktif
                                                     </option>
                                                 @elseif ($data['role']->active == 2)
