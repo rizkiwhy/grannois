@@ -110,9 +110,9 @@
                         <div class="row">
                             <div class="col-sm-12 form-group">
                                 <textarea id="content" name="content">
-                                        {{ $data['announcement']->content }}
+                                    {{ $data['announcement']->content }}
                                             {{-- Place <em>some</em> <u>text</u> <strong>here</strong> --}}
-                                        </textarea>
+                                </textarea>
                             </div>
                         </div>
                     </div>
@@ -139,23 +139,41 @@
     <!-- Summernote -->
     {{-- <script src="{{ asset('src/plugins/summernote/summernote-bs4.min.js') }}"></script> --}}
     <script>
-        $('#form-edit-title').validate({
+        $('#updateForm').validate({
             rules: {
-                nama: {
-                    required: true,
+                    publisher: {
+                        required: true,
+                    },
+                    activityId: {
+                        required: true,
+                    },
+                    publishDate: {
+                        required: true,
+                    },
+                    letterNumber: {
+                        required: true,
+                    },
+                    content: {
+                        required: true,
+                    },
                 },
-                aktif: {
-                    required: true,
+                messages: {
+                    publisher: {
+                        required: "Silahkan pilih penerbit",
+                    },
+                    activityId: {
+                        required: "Silahkan pilih kegiatan",
+                    },
+                    publishDate: {
+                        required: "Silahkan pilih tanggal penerbitan",
+                    },
+                    letterNumber: {
+                        required: "Silahkan masukkan nomor surat",
+                    },
+                    content: {
+                        required: "Silahkan isi konten",
+                    },
                 },
-            },
-            messages: {
-                nama: {
-                    required: "Silahkan masukkan nama title",
-                },
-                aktif: {
-                    required: "Silahkan pilih status",
-                },
-            },
             errorElement: 'span',
             errorPlacement: function(error, element) {
                 error.addClass('invalid-feedback');

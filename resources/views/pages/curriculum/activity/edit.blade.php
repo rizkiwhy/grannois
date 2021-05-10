@@ -121,38 +121,4 @@
         </div>
     </section>
     <!-- /.content -->
-    <script src="{{ asset('src/plugins/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('src/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
-    <script>
-        $('#form-edit-title').validate({
-            rules: {
-                nama: {
-                    required: true,
-                },
-                aktif: {
-                    required: true,
-                },
-            },
-            messages: {
-                nama: {
-                    required: "Silahkan masukkan nama title",
-                },
-                aktif: {
-                    required: "Silahkan pilih status",
-                },
-            },
-            errorElement: 'span',
-            errorPlacement: function(error, element) {
-                error.addClass('invalid-feedback');
-                element.closest('.form-group').append(error);
-            },
-            highlight: function(element, errorClass, validClass) {
-                $(element).addClass('is-invalid');
-            },
-            unhighlight: function(element, errorClass, validClass) {
-                $(element).removeClass('is-invalid');
-            }
-        });
-
-    </script>
 @endsection

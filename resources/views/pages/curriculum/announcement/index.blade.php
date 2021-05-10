@@ -35,7 +35,7 @@
                             </div>
                             <div class="modal-body">
                                 <form action="{{ route('announcement.store') }}" method="post" class="form-horizontal"
-                                    id="storeForm">
+                                    id="createForm">
                                     @csrf
                                     <div class="row">
                                         @if (Auth::user()->role_id === 1)
@@ -94,9 +94,9 @@
                             <div class="row">
                                 <div class="col-sm-12 form-group">
                                     <textarea id="content" name="content">
-                                            {{-- {{ $data['announcement']->content }} --}}
-                                                {{-- Place <em>some</em> <u>text</u> <strong>here</strong> --}}
-                                            </textarea>
+                                                {{-- {{ $data['announcement']->content }} --}}
+                                                    {{-- Place <em>some</em> <u>text</u> <strong>here</strong> --}}
+                                                </textarea>
                                 </div>
                             </div>
                         </div>
@@ -220,7 +220,58 @@
         </div>
     </section>
     <script src="{{ asset('src/plugins/jquery/jquery.min.js') }}"></script>
+    {{-- <script src="{{ asset('src/plugins/jquery-validation/jquery.validate.min.js') }}"></script> --}}
     <script type="text/javascript">
+        $(function() {
+            $('#createForm').validate({
+                rules: {
+                    publisher: {
+                        required: true,
+                    },
+                    activityId: {
+                        required: true,
+                    },
+                    publishDate: {
+                        required: true,
+                    },
+                    letterNumber: {
+                        required: true,
+                    },
+                    content: {
+                        required: true,
+                    },
+                },
+                messages: {
+                    publisher: {
+                        required: "Silahkan pilih penerbit",
+                    },
+                    activityId: {
+                        required: "Silahkan pilih kegiatan",
+                    },
+                    publishDate: {
+                        required: "Silahkan pilih tanggal penerbitan",
+                    },
+                    letterNumber: {
+                        required: "Silahkan masukkan nomor surat",
+                    },
+                    content: {
+                        required: "Silahkan isi konten",
+                    },
+                },
+                errorElement: 'span',
+                errorPlacement: function(error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                }
+            });
+        });
+
         function deleteItem(arr) {
             $('#textNote').text(arr.note)
             $('#deleteForm').attr('action', `announcement/${arr.id}`)

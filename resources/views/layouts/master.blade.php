@@ -201,8 +201,8 @@
                     /* Read more about isConfirmed, isDenied below */
                     if (result.isConfirmed) {
                         $.get("/logout", function() {
-                            location.replace("http://localhost:8000/login")
-                            // location.replace("http://banana-crumble-14427.herokuapp.com/login")
+                            // location.replace("http://localhost:8000/login")
+                            location.replace("http://banana-crumble-14427.herokuapp.com/login")
                         }).then(() => {
                             Swal.fire('You are logged out!', '', 'success')
                         })

@@ -268,7 +268,7 @@ class GraduationController extends Controller
                     ucwords($graduation->activity->note) .
                         ' ' .
                         $graduation->student->user->name .
-                        ' berhasil ditambahkan!'
+                        ' berhasil diubah!'
                 );
         } else {
             return redirect()
@@ -277,7 +277,7 @@ class GraduationController extends Controller
                     'error_message',
                     'Pengumuman ' .
                         $graduation->activity->note .
-                        ' gagal ditambahkan!'
+                        ' gagal diubah!'
                 );
         }
     }

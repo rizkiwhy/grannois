@@ -215,9 +215,54 @@
         </section>
         <script src="{{ asset('src/plugins/jquery/jquery.min.js') }}"></script>
         <script type="text/javascript">
+            $(function() {
+                $('#createForm').validate({
+                    rules: {
+                        activityTypeId: {
+                            required: true,
+                        },
+                        schoolYear: {
+                            required: true,
+                        },
+                        startDate: {
+                            required: true,
+                        },
+                        endDate: {
+                            required: true,
+                        },
+                    },
+                    messages: {
+                        activityTypeId: {
+                            required: "Silahkan pilih tipe kegiatan",
+                        },
+                        schoolYear: {
+                            required: "Silahkan pilih tahun ajaran",
+                        },
+                        startDate: {
+                            required: "Silahkan pilih tanggal mulai",
+                        },
+                        endDate: {
+                            required: "Silahkan pilih tanggal selesai",
+                        },
+                    },
+                    errorElement: 'span',
+                    errorPlacement: function(error, element) {
+                        error.addClass('invalid-feedback');
+                        element.closest('.form-group').append(error);
+                    },
+                    highlight: function(element, errorClass, validClass) {
+                        $(element).addClass('is-invalid');
+                    },
+                    unhighlight: function(element, errorClass, validClass) {
+                        $(element).removeClass('is-invalid');
+                    }
+                });
+            });
+
             function deleteItem(arr) {
                 $('#textNote').text(arr.note)
                 $('#deleteForm').attr('action', `activity/${arr.id}`)
             }
+
         </script>
     @endsection

@@ -39,7 +39,7 @@
                             </div>
                             <div class="modal-body">
                                 <form action="{{ route('graduation.store') }}" method="post" class="form-horizontal"
-                                    id="storeForm" enctype="multipart/form-data">
+                                    id="createForm" enctype="multipart/form-data">
                                     @csrf
                                     <div class="row">
                                         <div class="col-sm-12 form-group">
@@ -217,11 +217,12 @@
                                                 </td>
                                                 <td>{{ $item->student->user->name }}</td>
                                                 <td>
-                                                    @if ($item->status)
+                                                    {{ $item->status }}
+                                                    {{-- @if ($item->status == 1)
                                                         Lulus
                                                     @else
                                                         Tidak Lulus
-                                                    @endif
+                                                    @endif --}}
                                                 </td>
                                                 <td>
                                                     <a href="{{ asset('certificate/') . '/' . $item->certificate }}"
@@ -297,6 +298,50 @@
         </section>
         <script src="{{ asset('src/plugins/jquery/jquery.min.js') }}"></script>
         <script type="text/javascript">
+            $(function() {
+                $('#createForm').validate({
+                    rules: {
+                        activityId: {
+                            required: true,
+                        },
+                        studentId: {
+                            required: true,
+                        },
+                        status: {
+                            required: true,
+                        },
+                        certificate: {
+                            required: true,
+                        },
+                    },
+                    messages: {
+                        activityId: {
+                            required: "Silahkan pilih kegiatan",
+                        },
+                        studentId: {
+                            required: "Silahkan pilih siswa",
+                        },
+                        status: {
+                            required: "Silahkan pilih status kelulusan",
+                        },
+                        certificate: {
+                            required: "Silahkan upload surat kelulusan",
+                        },
+                    },
+                    errorElement: 'span',
+                    errorPlacement: function(error, element) {
+                        error.addClass('invalid-feedback');
+                        element.closest('.form-group').append(error);
+                    },
+                    highlight: function(element, errorClass, validClass) {
+                        $(element).addClass('is-invalid');
+                    },
+                    unhighlight: function(element, errorClass, validClass) {
+                        $(element).removeClass('is-invalid');
+                    }
+                });
+            });
+
             function deleteItem(arr) {
                 $('#textStudent').text(arr.student.user.name)
                 $('#deleteForm').attr('action', `graduation/${arr.id}`)

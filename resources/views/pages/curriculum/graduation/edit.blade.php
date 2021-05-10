@@ -54,7 +54,7 @@
                                         <div class="input-group">
                                             <select class="form-control select2" id="activityId" name="activityId"
                                                 style="width: 100%;">
-                                                <option value="{{ $data['graduation']->id }}" selected>
+                                                <option value="{{ $data['graduation']->activity_id }}" selected>
                                                     {{ $data['graduation']->activity->note }}</option>
                                                 @foreach ($data['activity']->except($data['graduation']->activity_id) as $item)
                                                     <option value="{{ $item->id }}">
@@ -118,7 +118,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                         </div>
                     </div>
                     <!-- /.card-body -->
@@ -142,34 +142,48 @@
     <script src="{{ asset('src/plugins/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('src/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
     <script>
-        $('#form-edit-title').validate({
-            rules: {
-                nama: {
-                    required: true,
+        $(function() {
+            $('#updateForm').validate({
+                rules: {
+                    activityId: {
+                        required: true,
+                    },
+                    studentId: {
+                        required: true,
+                    },
+                    status: {
+                        required: true,
+                    },
+                    // certificate: {
+                    //     required: true,
+                    // },
                 },
-                aktif: {
-                    required: true,
+                messages: {
+                    activityId: {
+                        required: "Silahkan pilih kegiatan",
+                    },
+                    studentId: {
+                        required: "Silahkan pilih siswa",
+                    },
+                    status: {
+                        required: "Silahkan pilih status kelulusan",
+                    },
+                    // certificate: {
+                    //     required: "Silahkan upload surat kelulusan",
+                    // },
                 },
-            },
-            messages: {
-                nama: {
-                    required: "Silahkan masukkan nama title",
+                errorElement: 'span',
+                errorPlacement: function(error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
                 },
-                aktif: {
-                    required: "Silahkan pilih status",
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
                 },
-            },
-            errorElement: 'span',
-            errorPlacement: function(error, element) {
-                error.addClass('invalid-feedback');
-                element.closest('.form-group').append(error);
-            },
-            highlight: function(element, errorClass, validClass) {
-                $(element).addClass('is-invalid');
-            },
-            unhighlight: function(element, errorClass, validClass) {
-                $(element).removeClass('is-invalid');
-            }
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                }
+            });
         });
 
     </script>
