@@ -21,13 +21,13 @@
     <link rel="stylesheet" href="{{ asset('src/dist/css/adminlte.min.css') }}">
 </head>
 
-<body class="hold-transition login-page">
 
+
+<body class="hold-transition login-page">
 
     <div class="login-box">
         <div class="login-logo">
-            <img src="{{ asset('src/dist/img/11.png') }}" alt="User Avatar"
-                class="img-size-50"><br>
+            <img src="{{ asset('src/dist/img/11.png') }}" alt="User Avatar" class="img-size-50"><br>
             {{-- <a href="../../index2.html"><b>Assek</b>APP</a> --}}
             <b>Granno</b>IS
         </div>
@@ -82,6 +82,10 @@
                                     Remember Me
                                 </label>
                             </div> --}}
+                            <p class="mb-1">
+                                <a href="#" data-toggle="modal" data-target="#modal-sm" data-backdrop="static">I forgot
+                                    my password</a>
+                            </p>
                         </div>
                         <!-- /.col -->
                         <div class="col-4">
@@ -175,6 +179,42 @@
         });
 
     </script>
+
+
+    <div class="modal fade" id="modal-sm">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">User Credentials</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        <li>administrator
+                            <ul>
+                                <li>email : admin@gais.com</li>
+                                <li>password : gais123</li>
+                            </ul>
+                        </li>
+                        <li>curriculum staff
+                            <ul>
+                                <li>email : currstaff@gais.com</li>
+                                <li>password : gais123</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
 </body>
 
 </html>

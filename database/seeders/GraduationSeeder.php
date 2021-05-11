@@ -16,18 +16,34 @@ class GraduationSeeder extends Seeder
     {
         $dataGraduation = [
             [
-                // 'id' => Str::uuid(),
                 'activity_id' => 1,
                 'student_id' => 1,
                 'status' => 1,
                 'certificate' => '121310083-1.jpg',
             ],
             [
-                // 'id' => Str::uuid(),
                 'activity_id' => 2,
                 'student_id' => 2,
                 'status' => 1,
                 'certificate' => '121310084-1117.jpg',
+            ],
+            [
+                'activity_id' => 2,
+                'student_id' => 3,
+                'status' => 1,
+                'certificate' => '1706510097-RPL1_27_SAEPUL.pdf',
+            ],
+            [
+                'activity_id' => 1,
+                'student_id' => 4,
+                'status' => 1,
+                'certificate' => '1706510098-RPL1_28_SALMA.pdf',
+            ],
+            [
+                'activity_id' => 1,
+                'student_id' => 5,
+                'status' => 1,
+                'certificate' => '1706510103-RPL1_30_SYAHRUNIMAH.pdf',
             ],
         ];
 
