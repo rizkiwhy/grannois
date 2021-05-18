@@ -76,7 +76,7 @@
                                 <li>Hasil kelulusan dapat diunduh dalam bentuk file dengan format PDF.</li>
                                 <li><a href="#" data-toggle="modal" data-target="#modal-sm" data-backdrop="static">Contoh
                                         NIS.</a></li>
-
+                                <li><a href="{{ route('login.view') }}">Halaman Admin.</a></li>
                             </small>
                         </ul>
                     </div>
@@ -115,8 +115,8 @@
         $('#nis').on('input', function(event) {
             event.preventDefault();
             var nis = $(this).val();
-            var url = `http://localhost:8000/api/graduation/${nis}`;
-            // var url = `http://grannois.herokuapp.com/api/graduation/${nis}`;
+            // var url = `http://localhost:8000/api/graduation/${nis}`;
+            var url = `http://grannois.herokuapp.com/api/graduation/${nis}`;
             var html = '';
 
             if (nis.length === 10) {
@@ -137,42 +137,42 @@
                         if (response.status == 'success') {
                             $('#report').empty();
                             html += `<div class="callout callout-success">
-                                                <h5>${response.graduationMessage}</h5>
-                                                <p>Anda dinyatakan lulus dalam menempuh Ujian Sekolah dan Ujian Nasional Tahun Pelajaran ${response.data.graduation.activity.school_year}/${++response.data.graduation.activity.school_year}.
-                                                <a href="#" class="text-blue" data-toggle="modal" data-target="#modal-lg" data-backdrop="static">
-                                                <u>Klik disini untuk informasi lebih lanjut</u>
-                                                </a>
-                                                </p>
-                                                </div>
-                                                <div class="modal fade" id="modal-lg">
-                                                <div class="modal-dialog modal-lg">
-                                                <div class="modal-content">
-                                                <div class="modal-header">
-                                                <h4 class="modal-title" style="text-align: center;">Surat Pemberitahuan Kelulusan</h4>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                                </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                <div class="px-3">
-                                                ${response.data.graduation.activity.announcement[0].content}
-                                                </div>
-                                                </div>
-                                                <div class="modal-footer justify-content-between">
-                                                <p class="text-white">.</p>
-                                                <div class="col-md-4 offset-md-8">
-                                                <a class="btn btn-primary btn-flat float-sm-right mx-1" href="{{ asset('certificate/${response.data.graduation.certificate}') }}" target="_blank" aria-disabled="true">
-                                                Lihat
-                                                </a>
-                                                <a class="btn btn-primary btn-flat float-sm-right mx-1" href="{{ asset('certificate/${response.data.graduation.certificate}') }}" download>
-                                                Unduh
-                                                </a>
-                                                <p class="text-white">.</p>
-                                                </div>
-                                                </div>
-                                                </div>
-                                                </div>
-                                                </div>`;
+                                    <h5>${response.graduationMessage}</h5>
+                                    <p>Anda dinyatakan lulus dalam menempuh Ujian Sekolah dan Ujian Nasional Tahun Pelajaran ${response.data.graduation.activity.school_year}/${++response.data.graduation.activity.school_year}.
+                                    <a href="#" class="text-blue" data-toggle="modal" data-target="#modal-lg" data-backdrop="static">
+                                    <u>Klik disini untuk informasi lebih lanjut</u>
+                                    </a>
+                                    </p>
+                                    </div>
+                                    <div class="modal fade" id="modal-lg">
+                                    <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h4 class="modal-title" style="text-align: center;">Surat Pemberitahuan Kelulusan</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                    <div class="px-3">
+                                    ${response.data.graduation.activity.announcement[0].content}
+                                    </div>
+                                    </div>
+                                    <div class="modal-footer justify-content-between">
+                                    <p class="text-white">.</p>
+                                    <div class="col-md-4 offset-md-8">
+                                    <a class="btn btn-primary btn-flat float-sm-right mx-1" href="{{ asset('certificate/${response.data.graduation.certificate}') }}" target="_blank" aria-disabled="true">
+                                    Lihat
+                                    </a>
+                                    <a class="btn btn-primary btn-flat float-sm-right mx-1" href="{{ asset('certificate/${response.data.graduation.certificate}') }}" download>
+                                    Unduh
+                                    </a>
+                                    <p class="text-white">.</p>
+                                    </div>
+                                    </div>
+                                    </div>
+                                    </div>
+                                    </div>`;
                             $('#report').append(html);
                             $('#letterNumber').text(
                                 `: ${response.data.graduation.activity.announcement[0].letter_number}`
@@ -192,28 +192,28 @@
                         } else {
                             $('#report').empty();
                             html += `<div class="callout callout-danger">
-                                                <h5>${response.message}!</h5>
-                                                <p>
-                                                <ul>
-                                                <li>Tunggu pengumuman hasil kelulusan sesuai jadwal yang telah ditentukan (${formatDate(response.publish_date)}).</li>
-                                                <li>Hubungi Staff Kurikulum jika terjadi permasalahan.</li>
-                                                </ul>
-                                                </p>
-                                                </div>`;
+                                    <h5>${response.message}!</h5>
+                                    <p>
+                                    <ul>
+                                    <li>Tunggu pengumuman hasil kelulusan sesuai jadwal yang telah ditentukan (${formatDate(response.publish_date)}).</li>
+                                    <li>Hubungi Staff Kurikulum jika terjadi permasalahan.</li>
+                                    </ul>
+                                    </p>
+                                    </div>`;
                             $('#report').append(html);
                         }
                     },
                     error: function(response) {
                         $('#report').empty();
                         html += `<div class="callout callout-danger">
-                                            <h5>${response.responseJSON.message}!</h5>
-                                            <p>
-                                            <ul>
-                                            <li>Silahkan periksa kembali NIS yang dimasukkan.</li>
-                                            <li>Hubungi Staff Kurikulum jika terjadi permasalahan.</li>
-                                            </ul>
-                                            </p>
-                                            </div>`;
+                                <h5>${response.responseJSON.message}!</h5>
+                                <p>
+                                <ul>
+                                <li>Silahkan periksa kembali NIS yang dimasukkan.</li>
+                                <li>Hubungi Staff Kurikulum jika terjadi permasalahan.</li>
+                                </ul>
+                                </p>
+                                </div>`;
                         $('#report').append(html);
                     }
                 });
