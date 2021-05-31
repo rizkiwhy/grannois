@@ -19,8 +19,9 @@ class CreateStudentsTable extends Migration
             $table
                 ->foreignId('user_id')
                 ->constrained('users')
-                ->onDelete('cascade')
-                ->onUpdate('cascade')->unique();
+                // ->onDelete('cascade')
+                // ->onUpdate('cascade')
+                ->unique();
             // $table
             //     ->foreignUuid('user_id')
             //     ->nullable()
@@ -32,9 +33,9 @@ class CreateStudentsTable extends Migration
             $table->uuid('origin_school_id')->nullable();
             $table
                 ->foreignId('competency_of_expertise_id')
-                ->constrained('competency_of_expertises')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+                ->constrained('competency_of_expertises');
+            // ->onUpdate('cascade')
+            // ->onDelete('cascade');
             $table->timestamps();
             // $table->softDeletes();
         });

@@ -17,12 +17,12 @@ class CreateCompetencyOfExpertisesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('label');
-            $table
-                ->foreignId('study_program_of_expertise_id')
-                ->nullable()
-                ->constrained('study_program_of_expertises')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+            // $table
+            //     ->foreignId('study_program_of_expertise_id')
+            //     ->nullable()
+            //     ->constrained('study_program_of_expertises')
+            //     ->onUpdate('cascade')
+            //     ->onDelete('cascade');
             $table->boolean('active');
             $table->timestamps();
             $table->softDeletes();

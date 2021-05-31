@@ -21,11 +21,9 @@ class CreateAnnouncementsTable extends Migration
             //     ->constrained('activities')
             //     ->onUpdate('cascade')
             //     ->onDelete('cascade');
-            $table
-                ->foreignId('activity_id')
-                ->constrained('activities')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+            $table->foreignId('activity_id')->constrained('activities');
+            // ->onUpdate('cascade')
+            // ->onDelete('cascade');
             $table->date('publish_date');
             // $table
             //     ->foreignUuid('publisher')
@@ -35,11 +33,9 @@ class CreateAnnouncementsTable extends Migration
             $table->string('note');
             $table->string('letter_number');
             $table->text('content');
-            $table
-                ->foreignId('publisher')
-                ->constrained('users')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+            $table->foreignId('publisher')->constrained('users');
+            // ->onUpdate('cascade')
+            // ->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

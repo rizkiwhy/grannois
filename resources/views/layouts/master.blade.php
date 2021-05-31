@@ -202,7 +202,7 @@
                     if (result.isConfirmed) {
                         $.get("/logout", function() {
                             // location.replace("http://localhost:8000/login")
-                            location.replace("http://banana-crumble-14427.herokuapp.com/login")
+                            location.replace("http://grannois.herokuapp.com//login")
                         }).then(() => {
                             Swal.fire('You are logged out!', '', 'success')
                         })

@@ -18,9 +18,9 @@ class CreateActivitiesTable extends Migration
             $table->id();
             $table
                 ->foreignId('activity_type_id')
-                ->constrained('activity_types')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+                ->constrained('activity_types');
+            // ->onUpdate('cascade')
+            // ->onDelete('cascade');
             $table->year('school_year');
             $table->date('start_date');
             $table->date('end_date');

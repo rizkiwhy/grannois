@@ -26,16 +26,14 @@ class CreateGraduationsTable extends Migration
             //     ->constrained('students')
             //     ->onUpdate('cascade')
             //     ->onDelete('cascade');
-            $table
-                ->foreignId('activity_id')
-                ->constrained('activities')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+            $table->foreignId('activity_id')->constrained('activities');
+            // ->onUpdate('cascade')
+            // ->onDelete('cascade');
             $table
                 ->foreignId('student_id')
                 ->constrained('students')
-                ->onUpdate('cascade')
-                ->onDelete('cascade')
+                // ->onUpdate('cascade')
+                // ->onDelete('cascade')
                 ->unique();
             $table->boolean('status');
             $table->string('certificate');

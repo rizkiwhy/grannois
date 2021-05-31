@@ -48,7 +48,7 @@ class StudentSeeder extends Seeder
                 'active' => true,
             ],
             [
-                'name' => 'syahrunnimah',
+                'name' => 'Syahrunnimah',
                 'email' => 'syahrun@gmail.com',
                 'password' => bcrypt('gais123'),
                 'role_id' => 3,
