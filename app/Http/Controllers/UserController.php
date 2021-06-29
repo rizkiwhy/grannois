@@ -224,7 +224,7 @@ class UserController extends Controller
         }
 
         // ubah menjadi bukan student (delete data student)
-        if ($request->role_id != 3 && $tempRoleId == 3) {
+        if ($request->roleId != 3 && $tempRoleId == 3) {
             // delete student
             $createStudent = $user->student()->delete();
         }

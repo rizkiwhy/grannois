@@ -19,6 +19,10 @@
     <link rel="stylesheet" href="{{ asset('src/plugins/toastr/toastr.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('src/dist/css/adminlte.min.css') }}">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{ asset('src/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('src/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('src/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
 </head>
 
 
@@ -182,7 +186,7 @@
 
 
     <div class="modal fade" id="modal-sm">
-        <div class="modal-dialog modal-sm">
+        <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">User Credentials</h4>
@@ -191,20 +195,36 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <ul>
-                        <li>administrator
-                            <ul>
-                                <li>email : admin@gais.com</li>
-                                <li>password : gais123</li>
-                            </ul>
-                        </li>
-                        <li>curriculum staff
-                            <ul>
-                                <li>email : currstaff@gais.com</li>
-                                <li>password : gais123</li>
-                            </ul>
-                        </li>
-                    </ul>
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Password</th>
+                                <th>Role</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>admin@gais.com</td>
+                                <td>gais123
+                                </td>
+                                <td>administrator</td>
+                            </tr>
+                            <tr>
+                                <td>currstaff@gais.com</td>
+                                <td>gais123
+                                </td>
+                                <td>curriculum staff</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Email</th>
+                                <th>Password</th>
+                                <th>Role</th>
+                            </tr>
+                        </tfoot>
+                    </table>
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -218,3 +238,79 @@
 </body>
 
 </html>
+<!-- DataTables  & Plugins -->
+<script src="{{ asset('src/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('src/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('src/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ asset('src/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('src/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('src/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('src/plugins/jszip/jszip.min.js') }}"></script>
+<script src="{{ asset('src/plugins/pdfmake/pdfmake.min.js') }}"></script>
+<script src="{{ asset('src/plugins/pdfmake/vfs_fonts.js') }}"></script>
+<script src="{{ asset('src/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('src/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
+<script src="{{ asset('src/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+<script>
+    $(function() {
+        $("#example1").DataTable({
+            "responsive": true,
+            "lengthChange": false,
+            "autoWidth": false,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+        });
+    });
+
+    /* To Disable Inspect Element */
+    $(document).bind("contextmenu",function(e) {
+        e.preventDefault();
+    });
+
+    $(document).keydown(function(e){
+        if(e.which === 123){
+        return false;
+        }
+    });
+
+    document.onkeydown = function(e) {
+        if(event.keyCode == 123) {
+            return false;
+        }
+        if(e.ctrlKey && e.keyCode == 'E'.charCodeAt(0)){
+            return false;
+        }
+        if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)){
+            return false;
+        }
+        if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)){
+            return false;
+        }
+        if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)){
+            return false;
+        }
+        if(e.ctrlKey && e.keyCode == 'S'.charCodeAt(0)){
+            return false;
+        }
+        if(e.ctrlKey && e.keyCode == 'H'.charCodeAt(0)){
+            return false;
+        }
+        if(e.ctrlKey && e.keyCode == 'A'.charCodeAt(0)){
+            return false;
+        }
+        if(e.ctrlKey && e.keyCode == 'F'.charCodeAt(0)){
+            return false;
+        }
+        if(e.ctrlKey && e.keyCode == 'E'.charCodeAt(0)){
+            return false;
+        }
+    }
+</script>

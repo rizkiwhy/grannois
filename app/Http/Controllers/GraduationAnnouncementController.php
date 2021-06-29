@@ -55,7 +55,20 @@ class GraduationAnnouncementController extends Controller
      */
     public function show($id)
     {
-        $dataGraduation = Student::where('student_parent_number', $id)
+        try {
+            DB::connection()->getPdo();
+        } catch (\Exception $e) {
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' =>
+                    'Could not connect to the database. Please check your configuration.',
+                ],
+                501
+            );
+        }
+
+        $dataStudent = Student::where('student_parent_number', $id)
             ->with([
                 'graduation.activity.announcement',
                 'competencyOfExpertise',
@@ -63,58 +76,79 @@ class GraduationAnnouncementController extends Controller
             ])
             ->first();
 
-        if (DB::connection()->getPdo()) {
-            if ($dataGraduation) {
-                $publish_date = Student::where('student_parent_number', $id)
-                    ->with(['graduation.activity.announcement'])
-                    ->first()->graduation->activity->announcement[0]
-                    ->publish_date;
-                // dd(date('Y-m-d'));
-                if (date('Y-m-d') >= $publish_date) {
+        // data siswa tidak ditemukan
+        if ($dataStudent === null) {
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'Data siswa tidak ditemukan',
+                ],
+                200
+            );
+        }
+
+        // data kelulusan ditemukan
+        if ($dataStudent->graduation) {
+            // data kelulusan sudah dipublikasi
+            if (
+                date('Y-m-d') >=
+                $dataStudent->graduation->activity->announcement[0]
+                ->publish_date
+            ) {
+                // dd($dataStudent->graduation);
+                // data nilai tidak lengkap
+                if ($dataStudent->graduation->status !== 1) {
                     return response()->json(
                         [
-                            'code' => 200,
                             'status' => 'success',
-                            'message' => 'Data siswa berhasil ditemukan',
-                            'graduationMessage' =>
-                                'Selamat ' .
-                                $dataGraduation->user->name .
-                                ', anda lulus!',
-                            // 'contentOfAnnouncement' => $dataGraduation->graduation
-                            'data' => $dataGraduation,
+                            'message' => 'Data nilai belum lengkap',
+                            // 'graduationMessage' =>
+                            //     'Selamat ' .
+                            //     $dataStudent->user->name .
+                            //     ', anda lulus!',
+                            'data' => $dataStudent,
                         ],
                         200
                     );
                 } else {
+                    // data nilai lengkap
                     return response()->json(
                         [
-                            'code' => 200,
-                            'status' => 'error',
+                            'status' => 'success',
                             'message' =>
-                                'Pengumuman kelulusan belum dipublikasi',
-                            'publish_date' => $publish_date,
+                            'Selamat ' .
+                                $dataStudent->user->name .
+                                ', anda lulus!',
+                            // 'graduationMessage' =>
+                            //     'Selamat ' .
+                            //     $dataStudent->user->name .
+                            //     ', anda lulus!',
+                            'data' => $dataStudent,
                         ],
                         200
                     );
                 }
             } else {
+                // data kelulusan belum dipublikasi
                 return response()->json(
                     [
-                        'code' => 500,
                         'status' => 'error',
-                        'message' => 'Data kelulusan tidak ditemukan',
+                        'message' => 'Pengumuman kelulusan belum dipublikasi',
+                        'publish_date' =>
+                        $dataStudent->graduation->activity->announcement[0]
+                            ->publish_date,
                     ],
-                    500
+                    200
                 );
             }
         } else {
+            // data kelulusan tidak ditemukan
             return response()->json(
                 [
-                    'code' => 501,
                     'status' => 'error',
-                    'message' => 'Koneksi Gagal !',
+                    'message' => 'Data kelulusan tidak ditemukan',
                 ],
-                501
+                500
             );
         }
     }

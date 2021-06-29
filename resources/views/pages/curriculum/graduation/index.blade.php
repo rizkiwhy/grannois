@@ -84,7 +84,7 @@
                                                         Lulus
                                                     </option>
                                                     <option value="0">
-                                                        Tidak Lulus
+                                                        Ditangguhkan
                                                     </option>
                                                 </select>
                                             </div>
@@ -220,7 +220,7 @@
                                                     @if ($item->status == 1)
                                                         Lulus
                                                     @else
-                                                        Tidak Lulus
+                                                        Ditangguhkan
                                                     @endif
                                                 </td>
                                                 <td>

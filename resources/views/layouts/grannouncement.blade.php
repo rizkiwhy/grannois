@@ -76,6 +76,52 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{{ asset('src/dist/js/adminlte.min.js') }}"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="{{ asset('src/dist/js/demo.js') }}"></script>
+
+    <script type="text/javascript">
+    /* To Disable Inspect Element */
+    $(document).bind("contextmenu",function(e) {
+        e.preventDefault();
+        });
+
+        $(document).keydown(function(e){
+            if(e.which === 123){
+            return false;
+            }
+        });
+
+        document.onkeydown = function(e) {
+            if(event.keyCode == 123) {
+                return false;
+            }
+            if(e.ctrlKey && e.keyCode == 'E'.charCodeAt(0)){
+                return false;
+            }
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)){
+                return false;
+            }
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)){
+                return false;
+            }
+            if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)){
+                return false;
+            }
+            if(e.ctrlKey && e.keyCode == 'S'.charCodeAt(0)){
+                return false;
+            }
+            if(e.ctrlKey && e.keyCode == 'H'.charCodeAt(0)){
+                return false;
+            }
+            if(e.ctrlKey && e.keyCode == 'A'.charCodeAt(0)){
+                return false;
+            }
+            if(e.ctrlKey && e.keyCode == 'F'.charCodeAt(0)){
+                return false;
+            }
+            if(e.ctrlKey && e.keyCode == 'E'.charCodeAt(0)){
+                return false;
+            }
+        }
+    </script>
 </body>
 
 </html>

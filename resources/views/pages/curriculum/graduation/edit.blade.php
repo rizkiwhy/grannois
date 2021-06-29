@@ -90,12 +90,12 @@
                                                     @if ($data['graduation']->status == 1)
                                                         Lulus
                                                     @elseif ($data['graduation']->status == 0)
-                                                        Tidak Lulus
+                                                        Ditangguhkan
                                                     @endif
                                                 </option>
                                                 @if ($data['graduation']->status == 1)
                                                     <option value="0">
-                                                        Tidak Lulus
+                                                        Ditangguhkan
                                                     </option>
                                                 @elseif ($data['graduation']->status == 0)
                                                     <option value="1">

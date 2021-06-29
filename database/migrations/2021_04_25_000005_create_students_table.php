@@ -29,7 +29,7 @@ class CreateStudentsTable extends Migration
             $table->string('place_of_birth');
             $table->date('date_of_birth');
             $table->string('student_parent_number');
-            $table->string('national_student_parent_number');
+            $table->string('national_student_parent_number')->nullable();
             $table->uuid('origin_school_id')->nullable();
             $table
                 ->foreignId('competency_of_expertise_id')
