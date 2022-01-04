@@ -111,7 +111,6 @@
     @if (Session::has('success_message'))
         <script>
             toastr.success('{!! Session::get('success_message') !!}')
-
         </script>
     @endif
 

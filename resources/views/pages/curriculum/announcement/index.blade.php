@@ -96,7 +96,7 @@
                                     <textarea id="content" name="content">
                                                 {{-- {{ $data['announcement']->content }} --}}
                                                     {{-- Place <em>some</em> <u>text</u> <strong>here</strong> --}}
-                                                </textarea>
+                                    </textarea>
                                 </div>
                             </div>
                         </div>

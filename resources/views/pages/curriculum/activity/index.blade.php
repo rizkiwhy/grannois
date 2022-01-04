@@ -105,8 +105,8 @@
             </div><!-- /.container-fluid -->
         </div>
         <!-- /.content-header -->
-    @endsection
-    @section('main-content')
+@endsection
+@section('main-content')
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
@@ -265,4 +265,4 @@
             }
 
         </script>
-    @endsection
+@endsection
